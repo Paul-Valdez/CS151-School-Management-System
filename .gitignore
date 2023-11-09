@@ -1,33 +1,45 @@
 # Compiled source #
 ###################
-*.com
+/target/
 *.class
 *.dll
 *.exe
 *.o
 *.so
 
-# Packages #
-############
-# it's better to unpack these files and commit the raw source
-# git has its own built in compression methods
-*.7z
-*.dmg
-*.gz
-*.iso
+# Package files #
+#################
 *.jar
-*.rar
-*.tar
+*.war
+*.ear
+*.nar
 *.zip
+*.tar.gz
+*.rar
 
-# Logs and databases #
-######################
-*.log
-*.sql
-*.sqlite
+# IDE - Eclipse #
+#################
+.project
+.classpath
+.settings/
 
-# OS generated files #
-######################
+# IDE - IntelliJ IDEA #
+#######################
+.idea/
+*.iml
+*.iws
+
+# IDE - NetBeans #
+##################
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# Operating System Files #
+##########################
 .DS_Store
 .DS_Store?
 ._*
@@ -35,3 +47,53 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Logs #
+######################
+*.log
+
+# Dependency directories #
+###########################
+# Ignore default Maven directory and local repository.
+.mvn/
+repository/
+
+# Ignore Gradle project-specific cache directory
+.gradle/
+build/
+
+# Other #
+#########
+# OS generated files
+Thumbs.db
+ehthumbs.db
+
+# Package Files #
+*.7z
+*.dmg
+*.gz
+*.iso
+*.tar
+
+# Node.js #
+###########
+/node_modules/
+
+# Python #
+##########
+# Ignore compiled python bytecode
+*.py[cod]
+
+# JetBrains IDEs #
+##################
+*.hprof
+.idea/
+*.iml
+
+# Log files #
+#############
+*.log
+
+# Environment files #
+#####################
+.env
