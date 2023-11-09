@@ -36,6 +36,8 @@
 ehthumbs.db
 Thumbs.db
 
+# Maven #
+#########
 target/
 pom.xml.tag
 pom.xml.releaseBackup
