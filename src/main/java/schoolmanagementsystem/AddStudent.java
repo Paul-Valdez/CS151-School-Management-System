@@ -3,6 +3,7 @@ package schoolmanagementsystem;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -80,8 +81,11 @@ public class AddStudent extends ApplicationWindow {
 			try {
 				this.addStudent();
 			}
-			catch (Exception e) {
+			catch (SQLException e) {
 				// TODO
+			}
+			catch (ClassNotFoundException e) {
+				e.printStackTrace();
 			}
 		});
 		
@@ -93,8 +97,8 @@ public class AddStudent extends ApplicationWindow {
 		getContentPane().add(this.buttons, BorderLayout.SOUTH);
 	}
 	
-	private void addStudent() {
-		// TODO
+	private void addStudent() throws ClassNotFoundException, SQLException {
+		Class.forName("org.postgresql.Driver");
 	}
 	
 	public String[] getStudentAttributes() {
@@ -130,11 +134,7 @@ public class AddStudent extends ApplicationWindow {
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e);
 		}
-	}// GEN-LAST:event_jButton1ActionPerformed
-
-	private void rollActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_rollActionPerformed
-		// TODO add your handling code here:
-	}// GEN-LAST:event_rollActionPerformed
+	}
 */
 	public static void main(String args[]) {
 		EventQueue.invokeLater(() -> new AddStudent().showWindow());

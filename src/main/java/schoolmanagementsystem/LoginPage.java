@@ -80,7 +80,7 @@ public class LoginPage extends ApplicationWindow {
 			try {
 				this.loginUser();
 			} catch (SQLException e) {
-				JOptionPane.showMessageDialog(this, "Error while establishing connection!");
+				JOptionPane.showMessageDialog(this, "Error while establishing connection!", "Error", JOptionPane.ERROR_MESSAGE);
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
@@ -120,7 +120,7 @@ public class LoginPage extends ApplicationWindow {
 			if (correctUsername && correctPassword) {
 				showWindow(new HomePage());
 			} else {
-				JOptionPane.showMessageDialog(this, "Username or password is incorrect!");
+				JOptionPane.showMessageDialog(this, "Username or password is incorrect!", "Alert", JOptionPane.WARNING_MESSAGE);
 			}
 		}
 	}

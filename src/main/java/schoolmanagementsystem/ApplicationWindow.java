@@ -14,7 +14,6 @@ public class ApplicationWindow extends JFrame {
 		this.setSystemLF();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
-		// getContentPane().setPreferredSize(new Dimension(854, 480));
 	}
 	
 	public void showWindow() {
@@ -32,13 +31,17 @@ public class ApplicationWindow extends JFrame {
 		try {
 			// Set theme to system theme
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (UnsupportedLookAndFeelException e) {
+		} 
+		catch (UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
+		} 
+		catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		} catch (InstantiationException e) {
+		} 
+		catch (InstantiationException e) {
 	    	e.printStackTrace();
-	    } catch (IllegalAccessException e) {
+	    } 
+		catch (IllegalAccessException e) {
 	    	e.printStackTrace();
 	    }
 	}
