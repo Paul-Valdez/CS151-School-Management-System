@@ -114,7 +114,7 @@ public class EditTeacher extends ApplicationWindow {
         
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            Connection conn= DriverManager.getConnection("jdbc:mysql://localhost:3306/sms", "root","");
+			Connection conn; // FIX
             String sql= "update `addteacher` SET `name`='"+tn+"',`spec`='"+spe+"',`subject`='"+sub+"'WHERE id='"+tid+"'";
             PreparedStatement ptst=conn.prepareStatement(sql);
             ptst.execute();

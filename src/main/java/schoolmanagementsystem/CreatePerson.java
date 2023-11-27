@@ -25,7 +25,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
 /** Class for inserting a person into PERSONS table. */
-public class AddPerson extends ApplicationWindow {
+public class CreatePerson extends ApplicationWindow {
 
     private JTextField[] personInfo;
     private JButton goBack, clear, submit;
@@ -38,7 +38,7 @@ public class AddPerson extends ApplicationWindow {
             "Suffix", "Address", "Phone Number", "Email"};
 
     /** Default constructor for AddPerson class. */
-    public AddPerson() {
+    public CreatePerson() {
         this.initComponents();
         this.pack(); // Adjusts the window size based on the preferred sizes of its components
         this.setLocationRelativeTo(null); // This will center the window
@@ -164,7 +164,7 @@ public class AddPerson extends ApplicationWindow {
     }
 
     /** Establishes database connection, prepares and performs the database query to insert person into PERSONS table. */
-    private void addPerson() throws ClassNotFoundException, SQLException {
+    private void createPerson() throws ClassNotFoundException, SQLException {
         // Establish database connection
         Connection conn = null;
         PreparedStatement ptstmt = null;
@@ -259,6 +259,7 @@ public class AddPerson extends ApplicationWindow {
             // Prepare the SQL statement
             String sql = "INSERT INTO PERSONS (prefix_name, first_name, middle_name, last_name, suffix_name, " +
                     "address, phone_number, email, birthdate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
             ptstmt = conn.prepareStatement(sql);
 
             // Set values for PreparedStatement
@@ -368,11 +369,11 @@ public class AddPerson extends ApplicationWindow {
 
     /** Helper method for adding ActionListener to buttons. */
     private void setupActionListeners() {
-        this.goBack.addActionListener(event -> showWindow(new PersonModule()));
+        //this.goBack.addActionListener(event -> showWindow(new PersonModule()));
         this.clear.addActionListener(event -> initFormFieldsPlaceholders());
         this.submit.addActionListener(event -> {
             try {
-                addPerson();
+                createPerson();
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this, "SQL Error: " + ex.getMessage());
             } catch (ClassNotFoundException ex) {
@@ -446,7 +447,7 @@ public class AddPerson extends ApplicationWindow {
     /** Main method. */
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
-            AddPerson frame = new AddPerson();
+            CreatePerson frame = new CreatePerson();
             frame.setVisible(true);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Define the default close operation
         });

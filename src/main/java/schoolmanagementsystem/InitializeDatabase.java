@@ -15,18 +15,14 @@ import java.io.Reader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import org.apache.ibatis.jdbc.ScriptRunner;
+import schoolmanagementsystem.Utilities.DatabaseConnection;
 
 public class InitializeDatabase {
     public static void main(String[] args) {
-        // PostgreSQL database connection details
-        String url = "jdbc:postgresql://db.ngkqyysuhzwkiczqojsa.supabase.co:5432/postgres";
-        String user = "postgres";
-        String password = "mtSEfzZNMQDw2qpy";
-
         try {
             // Connect to database
-            Connection conn = DriverManager.getConnection(url, user, password);
-            
+            Connection conn = DatabaseConnection.getDBConnection();
+
             // Initialize the script runner
             ScriptRunner runner = new ScriptRunner(conn);
             runner.setLogWriter(null); // Disable logging if not needed

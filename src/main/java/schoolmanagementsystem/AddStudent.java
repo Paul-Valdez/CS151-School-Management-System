@@ -108,13 +108,14 @@ public class AddStudent extends ApplicationWindow {
 		}
 		return studentAttributes;
 	}
+
 	/*
 	private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
 		// TODO add your handling code here:
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/sms", "root", "");
+			Connection conn; // FIX
 			String sql = "insert into stureg values(?,?,?,?,?,?,?,?)";
 
 			PreparedStatement ptstmt = conn.prepareStatement(sql);

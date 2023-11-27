@@ -6,7 +6,7 @@ package schoolmanagementsystem.Utilities;
  * These methods are used to ensure that inputs conform to expected formats and rules before they
  * are processed or stored in the database.
  */
-public class ValidationUtil {
+public class InputValidation {
 
     /**
      * Validates if the provided name is valid.

@@ -111,7 +111,7 @@ public class TeacherModule extends ApplicationWindow {
         String tid= id.getText();
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            Connection conn= DriverManager.getConnection("jdbc:mysql://localhost:3306/sms", "root","");
+            Connection conn; // FIX
             String sql="delete from `addteacher` WHERE id="+tid;
             PreparedStatement ptst=conn.prepareStatement(sql);
             ptst.executeUpdate();

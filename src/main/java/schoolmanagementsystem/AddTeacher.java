@@ -113,7 +113,7 @@ public class AddTeacher extends ApplicationWindow {
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/sms", "root", "");
+			Connection conn; // FIX
 			String sql = "insert into stureg values(?,?,?,?,?,?,?,?)";
 
 			PreparedStatement ptstmt = conn.prepareStatement(sql);

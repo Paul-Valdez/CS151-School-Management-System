@@ -104,7 +104,7 @@ public class StudentModule extends ApplicationWindow {
 /*
 	private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)
 	 {//GEN-FIRST:event_jButton1ActionPerformed // TODO add your handling code here: try{ Class.forName("com.mysql.jdbc.Driver"); Connection conn =
-	 DriverManager.getConnection("jdbc:mysql://localhost:3306/sms", "root", "");
+	Connection conn; // FIX
 	 Statement st=conn.createStatement(); String sql= "select * from stureg";
 	 PreparedStatement ptst= conn.prepareStatement(sql); ResultSet rs=
 	  ptst.executeQuery(); DefaultTableModel
@@ -128,8 +128,8 @@ public class StudentModule extends ApplicationWindow {
 	  here:
 	  
 	  String sd= sid.getText(); try{ Class.forName("com.mysql.jdbc.Driver");
-	  Connection conn =
-	  DriverManager.getConnection("jdbc:mysql://localhost:3306/sms", "root", "");
+	Connection conn; // FIX
+	  DriverManager.getConnection(); // FIX
 	 Statement st=conn.createStatement(); String sql= "DELETE FROM `stureg` WHERE ID="+sd; PreparedStatement ptst= conn.prepareStatement(sql);
 	  ptst.executeUpdate(); JOptionPane.showMessageDialog(null, "Data has been removed"); conn.close(); sid.setText(""); }catch(Exception e){
 	  JOptionPane.showMessageDialog(null, e); }

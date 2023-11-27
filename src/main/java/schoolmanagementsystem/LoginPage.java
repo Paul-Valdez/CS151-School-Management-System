@@ -1,10 +1,8 @@
 package schoolmanagementsystem;
 
-import java.sql.Connection;
-import java.sql.Statement;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import schoolmanagementsystem.Utilities.DatabaseConnection;
+
+import java.sql.*;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -96,19 +94,15 @@ public class LoginPage extends ApplicationWindow {
 	}
 
 	private void loginUser() throws ClassNotFoundException, SQLException {
+		// Establish database connection
 		Class.forName("org.postgresql.Driver");
+		Connection conn = DatabaseConnection.getDBConnection();
 
-		// Example: jdbc:postgresql://[Host]:[Port]/[Database]
-		String url = "jdbc:postgresql://db.ngkqyysuhzwkiczqojsa.supabase.co:5432/postgres";
-		String user = "postgres";
-		String password = "mtSEfzZNMQDw2qpy";
-
-		Connection conn = (Connection) DriverManager.getConnection(url, user, password);
-		Statement st = (Statement) conn.createStatement();
-
+		// Prepare query
 		String sql = "SELECT * FROM user_login";
+		PreparedStatement ptstmt = conn.prepareStatement(sql);
 
-		ResultSet rs = st.executeQuery(sql);
+		ResultSet rs = ptstmt.executeQuery();
 
 		while (rs.next()) {
 			String getUsername = rs.getString("username");

@@ -121,7 +121,7 @@ public class EditStudent extends ApplicationWindow {
         // cant change fphone, roll, or address
         try{
         Class.forName("com.mysql.jdbc.Driver");
-        Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/sms","root","");
+		Connection conn; // FIX
         String sql = "update `stureg` SET `fname`='"+fname+"',`name`='"+name+"',`class`='"+cla+"',`phone`='"+pnum+"'WHERE id = '"+id+"'";
         PreparedStatement ptst= conn.prepareStatement(sql);
         ptst.execute();
