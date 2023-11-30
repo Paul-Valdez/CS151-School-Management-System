@@ -1,68 +1,83 @@
--- PostgreSQL version
+    BEGIN;
 
-BEGIN;
+    -- Drop all tables before recreation
+    DROP TABLE IF EXISTS PERSONS CASCADE;
+    DROP TABLE IF EXISTS ROLES CASCADE;
+    DROP TABLE IF EXISTS STUDENTS CASCADE;
+    DROP TABLE IF EXISTS EMPLOYEES CASCADE;
+    DROP TABLE IF EXISTS FACULTY CASCADE;
+    DROP TABLE IF EXISTS STAFF CASCADE;
+    DROP TABLE IF EXISTS user_login CASCADE;
 
--- Table structure for table 'addteacher'
+    -- Drop PERSONS id number sequence initial value and recreate
+    DROP SEQUENCE IF EXISTS persons_id_seq CASCADE;
+    CREATE SEQUENCE persons_id_seq START WITH 100000001;
 
-CREATE TABLE addteacher (
-  id INTEGER NOT NULL,
-  name VARCHAR(255) NOT NULL,
-  spec VARCHAR(255) NOT NULL,
-  subject VARCHAR(255) NOT NULL
-);
+    CREATE TABLE PERSONS (
+        id INTEGER PRIMARY KEY DEFAULT nextval('persons_id_seq'),
+        prefix_name VARCHAR(50),
+        first_name VARCHAR(100) NOT NULL,
+        middle_name VARCHAR(100),
+        last_name VARCHAR(100),
+        suffix_name VARCHAR(50),
+        birthdate DATE,
+        address VARCHAR(255),
+        phone_number VARCHAR(20),
+        email VARCHAR(254)
+    );
 
+    CREATE TABLE ROLES (
+        person_id INT,
+        role_type VARCHAR(50),  -- student, faculty, staff
+        PRIMARY KEY (person_id, role_type),
+        FOREIGN KEY (person_id) REFERENCES PERSONS(id) ON DELETE CASCADE
+    );
 
--- Table structure for table 'feesubmit'
+    CREATE TABLE STUDENTS (
+        person_id INT PRIMARY KEY,
+        student_type VARCHAR(50),   -- undergraduate, graduate
+        major VARCHAR(100),
+        minor VARCHAR(100),
+        enrollment_status VARCHAR(50),  -- enrolled, leave of absence, graduated
+        advisor_id INT,
+        FOREIGN KEY (person_id) REFERENCES PERSONS(id) ON DELETE CASCADE,
+        FOREIGN KEY (advisor_id) REFERENCES PERSONS(id) ON DELETE CASCADE
+    );
 
-CREATE TABLE feesubmit (
-  id INTEGER NOT NULL,
-  name VARCHAR(255) NOT NULL,
-  monthname VARCHAR(255) NOT NULL,
-  annual INTEGER NOT NULL,
-  monthly INTEGER NOT NULL,
-  sport INTEGER NOT NULL,
-  library INTEGER NOT NULL,
-  "Status" VARCHAR(255) NOT NULL
-);
+    CREATE TABLE EMPLOYEES (
+        person_id INT PRIMARY KEY,
+        department VARCHAR(100),
+        title VARCHAR(100),
+        employment_type VARCHAR(50),    -- full-time, part-time, contract, temporary, 
+                                        -- volunteer, intern/trainee, seasonal, other
+        employment_status VARCHAR(50),  -- active, retired, resigned, terminated, on leave, contract ended, suspended
+                                        -- furloughed, laid off, probationary
+        office_location VARCHAR(100),
+        FOREIGN KEY (person_id) REFERENCES PERSONS(id) ON DELETE CASCADE
+    );
 
+    CREATE TABLE FACULTY (
+        employee_id INT PRIMARY KEY,
+        faculty_type VARCHAR(50),   -- professor, associate professor, assistant professor, 
+                                    -- lecturer, instructor, adjunct, emeritus, visiting scholar, visiting professor
+        FOREIGN KEY (employee_id) REFERENCES EMPLOYEES(person_id) ON DELETE CASCADE
+    );
 
--- Table structure for table 'reportcard'
+    CREATE TABLE STAFF (
+        employee_id INT PRIMARY KEY,
+        staff_type VARCHAR(50), -- Administration, Information Technology, Research,
+                                -- Library, Maintenance and Facilities, Health and Counseling,
+                                -- Student Services, Security, Campus Police, Contractors,
+                                -- Consultants, Volunteers, Student Workers
+        FOREIGN KEY (employee_id) REFERENCES EMPLOYEES(person_id) ON DELETE CASCADE
+    );
 
-CREATE TABLE reportcard (
-  id INTEGER NOT NULL,
-  name VARCHAR(255) NOT NULL,
-  class VARCHAR(255) NOT NULL,
-  phy INTEGER NOT NULL,
-  chem INTEGER NOT NULL,
-  math INTEGER NOT NULL,
-  rollnumber VARCHAR(255) NOT NULL,
-  grade VARCHAR(255) NOT NULL
-);
+    CREATE TABLE user_login (
+        id SERIAL PRIMARY KEY,
+        username VARCHAR(200) NOT NULL,
+        password VARCHAR(200) NOT NULL
+    );
 
+    INSERT INTO user_login (username, password) VALUES ('admin', 'admin');
 
--- Table structure for table 'stureg'
-
-CREATE TABLE stureg (
-  id INTEGER NOT NULL,
-  name VARCHAR(255) NOT NULL,
-  fname VARCHAR(255) NOT NULL,
-  phone INTEGER NOT NULL,
-  fatherphone INTEGER NOT NULL,
-  class VARCHAR(255) NOT NULL,
-  roll VARCHAR(255) NOT NULL,
-  address VARCHAR(255) NOT NULL
-);
-
-
--- Table structure for table 'user_login'
-
-CREATE TABLE user_login (
-  id INTEGER NOT NULL,
-  username VARCHAR(200) NOT NULL,
-  password VARCHAR(200) NOT NULL
-);
-
-
-INSERT INTO user_login (id, username, password) VALUES (1, 'admin', 'admin');
-
-COMMIT;
+    COMMIT;
