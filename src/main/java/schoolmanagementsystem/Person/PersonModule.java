@@ -131,7 +131,10 @@ public class PersonModule extends ApplicationWindow {
         searchTextField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                filterTable();
+                // Stop search from filtering using the placeholder
+                if (!searchTextField.getText().equals(SEARCH_PLACEHOLDER)) {
+                    filterTable();
+                }
             }
 
             @Override
@@ -369,6 +372,9 @@ public class PersonModule extends ApplicationWindow {
                 if (searchTextField.getForeground() == Color.GRAY && searchTextField.getText().equals(SEARCH_PLACEHOLDER)) {
                     searchTextField.setText("");
                     searchTextField.setForeground(Color.BLACK);
+                } else if (!searchTextField.getText().isEmpty()) {
+                    // If there is actual text in the search field, filter the table
+                    filterTable();
                 }
             }
 
@@ -388,7 +394,11 @@ public class PersonModule extends ApplicationWindow {
     // SEARCH FUNCTIONALITY
     private void filterTable() {
         String searchText = searchTextField.getText().toLowerCase();
-        tableRowSorter.setRowFilter(new PersonRowFilter(searchText));
+        if (!searchText.isEmpty()) {
+            tableRowSorter.setRowFilter(new PersonRowFilter(searchText));
+        } else {
+            tableRowSorter.setRowFilter(null);
+        }
     }
     
     private class PersonRowFilter extends RowFilter<DefaultTableModel, Integer> {
