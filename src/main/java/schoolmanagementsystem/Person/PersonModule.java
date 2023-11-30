@@ -16,16 +16,13 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ArrayList;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableRowSorter;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -44,12 +41,20 @@ import javax.swing.KeyStroke;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import java.awt.event.KeyEvent;
+import javax.swing.RowFilter;
+import javax.swing.RowFilter.Entry;
 
 public class PersonModule extends ApplicationWindow {
     private JPanel panel1;
     private JTextField searchTextField;
     private JButton backButton, addButton, editButton, viewButton;
     private static JTable personTable;
+    private TableRowSorter<DefaultTableModel> tableRowSorter;
     private static final String SEARCH_PLACEHOLDER = "Enter search criteria e.g.: 123456789 (ID), " +
             "Dr. Sammy Spartan (name), 1999-07-14 (birthdate), 408-555-6789 (phone number), etc.",
             INSTRUCTIONS_LABEL_TEXT = "<html>Filter results by typing in the search bar.<br>" +
@@ -122,8 +127,24 @@ public class PersonModule extends ApplicationWindow {
         buttonPanel.add(editButton);
         buttonPanel.add(viewButton);
         panel1.add(buttonPanel);
+        
+        searchTextField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filterTable();
+            }
 
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filterTable();
+            }
 
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                // Plain text components don't fire these events
+            }
+        });
+        
         // Finalize frame setup
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Set the default close operation
         setContentPane(panel1); // Add panel to the frame
@@ -316,6 +337,10 @@ public class PersonModule extends ApplicationWindow {
         // Table Row Sorterer
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tableModel);
         personTable.setRowSorter(sorter);
+        
+        // Sorter for search
+        tableRowSorter = new TableRowSorter<>(tableModel);
+        personTable.setRowSorter(tableRowSorter);
 
         // Add personTable to scroll pane
         JScrollPane tableScrollPane = new JScrollPane(personTable);
@@ -358,5 +383,29 @@ public class PersonModule extends ApplicationWindow {
                 }
             }
         });
+    }
+    
+    // SEARCH FUNCTIONALITY
+    private void filterTable() {
+        String searchText = searchTextField.getText().toLowerCase();
+        tableRowSorter.setRowFilter(new PersonRowFilter(searchText));
+    }
+    
+    private class PersonRowFilter extends RowFilter<DefaultTableModel, Integer> {
+        private final String searchText;
+
+        public PersonRowFilter(String searchText) {
+            this.searchText = searchText;
+        }
+
+        @Override
+        public boolean include(Entry<? extends DefaultTableModel, ? extends Integer> entry) {
+            for (int i = entry.getValueCount() - 1; i >= 0; i--) {
+                if (entry.getStringValue(i).toLowerCase().contains(searchText)) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
