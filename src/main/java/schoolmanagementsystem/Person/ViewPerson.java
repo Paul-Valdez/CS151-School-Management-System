@@ -4,7 +4,6 @@ import schoolmanagementsystem.ApplicationWindow;
 import schoolmanagementsystem.Utilities.DatabaseConnection;
 import static schoolmanagementsystem.Person.PersonModule.COLUMN_NAMES;
 
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -18,7 +17,6 @@ import javax.swing.JPanel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import javax.swing.JFrame;
 import java.sql.ResultSet;
 
 /** Class for inserting a person into PERSONS table. */
@@ -26,8 +24,6 @@ public class ViewPerson extends ApplicationWindow {
 
     private JTextField[] personInfo;
     private final Font headerFont = new Font("SansSerif", Font.BOLD, 16); // Example font, adjust as needed
-    private static final String[] personInfoLabelStrings = {"ID", "Prefix", "First Name", "Middle Name", "Last Name",
-            "Suffix", "Birthdate", "Address", "Phone Number", "Email"};
 
     /** Default constructor for AddPerson class. */
     public ViewPerson() {
@@ -65,7 +61,6 @@ public class ViewPerson extends ApplicationWindow {
     /** Initializes form components. */
     private void initComponents() {
         // Labels
-        int[] fieldMaxLengths = {50, 100, 100, 100, 50, 255, 120, 100};
         JLabel[] personInfoLabel = new JLabel[9];
 
         for (int i = 0; i < personInfoLabel.length; i++)
@@ -100,12 +95,6 @@ public class ViewPerson extends ApplicationWindow {
             fieldGroup.addComponent(this.personInfo[i]);
         }
 
-        // Add the birthdate label and year, month, and day fields to the layout groups
-//        fieldGroup.addGroup(layout.createSequentialGroup()
-//                .addComponent(yearField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-//                .addComponent(monthField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-//                .addComponent(dayField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE));
-
         // Add the label and field groups to the horizontal group
         hGroup.addGroup(labelGroup);
         hGroup.addGroup(fieldGroup);
@@ -118,13 +107,7 @@ public class ViewPerson extends ApplicationWindow {
                     .addComponent(personInfoLabel[i]).addComponent(this.personInfo[i]));
         }
 
-//        // Align the birthdate label and fields vertically
-//        verticalGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(birthdateLabel));
-
         layout.setVerticalGroup(verticalGroup);
-
-        // Add action listeners for the buttons
-        setupActionListeners();
 
         // Add components to the content pane
         getContentPane().add(label, BorderLayout.NORTH);
@@ -150,13 +133,18 @@ public class ViewPerson extends ApplicationWindow {
             String sql = "SELECT * FROM PERSONS WHERE id = ?";
             prepStmt = conn.prepareStatement(sql);
             prepStmt.setInt(1, personID); // Replace someId with the actual ID value you want to query
-            ResultSet rs = prepStmt.executeQuery(); // Execute the query
+            ResultSet resultSet = prepStmt.executeQuery(); // Execute the query
 
             // Check if ResultSet has at least one row
-            if (rs.next()) {
+            if (resultSet.next()) {
                 // Iterate over each column and retrieve values
                 for (int i = 0; i < personInfo.length; i++) {
-                    personInfo[i].setText(String.valueOf(rs.getObject(i + 1)));
+                    String columnValue = String.valueOf(resultSet.getObject(i + 1));
+
+                    if (columnValue.equals("null"))
+                        personInfo[i].setText(null);
+                    else
+                        personInfo[i].setText(columnValue);
                 }
             }
 
@@ -187,17 +175,12 @@ public class ViewPerson extends ApplicationWindow {
         return new String[0];
     } // end addPerson()
 
-    /** Helper method for adding ActionListener to buttons. */
-    private void setupActionListeners() {
-        //this.goBack.addActionListener(event -> showWindow(new PersonModule()));
-    }
-
-    /** Main method. */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(() -> {
-            ViewPerson frame = new ViewPerson();
-            frame.setVisible(true);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Define the default close operation
-        });
-    }
+//    /** Main method. Not meant to be run directly by itself; for testing purposes only. */
+//    public static void main(String[] args) {
+//        EventQueue.invokeLater(() -> {
+//            ViewPerson frame = new ViewPerson();
+//            frame.setVisible(true);
+//            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Define the default close operation
+//        });
+//    }
 }

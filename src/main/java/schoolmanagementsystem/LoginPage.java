@@ -77,7 +77,8 @@ public class LoginPage extends ApplicationWindow {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		this.pack();
+//		this.pack();
+		setSize(250, 300); // Set the frame size
 	}
 
 	private void loginUser() throws ClassNotFoundException, SQLException {

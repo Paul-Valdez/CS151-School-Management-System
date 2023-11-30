@@ -5,8 +5,9 @@
  */
 package schoolmanagementsystem;
 
+import java.awt.*;
+
 /**
- *
  * @author dell
  */
 public class SchoolManagementSystem {
@@ -15,7 +16,6 @@ public class SchoolManagementSystem {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        new LoginPage().showWindow();
     }
-    
 }

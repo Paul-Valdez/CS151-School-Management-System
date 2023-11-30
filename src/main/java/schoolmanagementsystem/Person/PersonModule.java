@@ -47,7 +47,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.event.KeyEvent;
 import javax.swing.RowFilter;
-import javax.swing.RowFilter.Entry;
+import java.awt.Font;
 
 public class PersonModule extends ApplicationWindow {
     private JPanel panel1;
@@ -95,11 +95,13 @@ public class PersonModule extends ApplicationWindow {
         panel1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
         getContentPane().add(panel1);
 
-
         // Instructions label setup
         JLabel instructionsLabel = new JLabel(INSTRUCTIONS_LABEL_TEXT);
+        Font currentFont = instructionsLabel.getFont();
+        Font newFont = currentFont.deriveFont(currentFont.getSize2D() * 1.15f); // Increase size by 50%
+        instructionsLabel.setFont(newFont);//        instructionsLabel.setFont(regularFont);
         instructionsLabel.setOpaque(true);
-        instructionsLabel.setPreferredSize(new Dimension(900, 60));
+        instructionsLabel.setPreferredSize(new Dimension(900, 80));
         panel1.add(instructionsLabel);
 
 
@@ -151,7 +153,7 @@ public class PersonModule extends ApplicationWindow {
         // Finalize frame setup
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Set the default close operation
         setContentPane(panel1); // Add panel to the frame
-        setSize(960, 500); // Set the frame size
+        setSize(960, 525); // Set the frame size
         setLocationRelativeTo(null); // Center the frame
 
         setupActionListeners();
@@ -169,7 +171,6 @@ public class PersonModule extends ApplicationWindow {
      * Helper method for adding ActionListener to buttons.
      */
     private void setupActionListeners() {
-        //this.goBack.addActionListener(event -> showWindow(new PersonModule()));
         this.backButton.addActionListener(event -> showWindowAndDispose(new MainMenu()));
 
         this.addButton.addActionListener(event -> {
@@ -381,11 +382,9 @@ public class PersonModule extends ApplicationWindow {
             // focusLost
             @Override
             public void focusLost(FocusEvent e) {
-                if (searchTextField.getText().isEmpty() || searchTextField.getText().trim().equals("0")) {
+                if (searchTextField.getText().trim().isEmpty()) {
                     searchTextField.setForeground(Color.GRAY);
                     searchTextField.setText(SEARCH_PLACEHOLDER);
-                } else if (searchTextField.getText().trim().length() == 1) {
-                    searchTextField.setText("0" + searchTextField.getText().trim());
                 }
             }
         });
@@ -393,7 +392,7 @@ public class PersonModule extends ApplicationWindow {
     
     // SEARCH FUNCTIONALITY
     private void filterTable() {
-        String searchText = searchTextField.getText().toLowerCase();
+        String searchText = searchTextField.getText().trim().toLowerCase();
         if (!searchText.isEmpty()) {
             tableRowSorter.setRowFilter(new PersonRowFilter(searchText));
         } else {

@@ -9,7 +9,8 @@ import java.util.Map;
 
 public class ApplicationWindow extends JFrame {
 	private static Map<Class<? extends ApplicationWindow>, ApplicationWindow> openWindows = new HashMap<>();
-	public Font headerFont = new Font(Font.SANS_SERIF, Font.BOLD, 24);
+	public Font headerFont = new Font(Font.SANS_SERIF, Font.BOLD, 16);
+//	public Font regularFont = new Font(Font.SANS_SERIF, Font.PLAIN, 14);
 
 	public ApplicationWindow() {
 		this.setSystemLF();

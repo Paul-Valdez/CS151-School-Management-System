@@ -8,7 +8,6 @@ import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.*;
@@ -26,8 +25,7 @@ import javax.swing.text.DocumentFilter;
 public class AddPerson extends ApplicationWindow {
 
     private JTextField[] personInfo;
-    private JButton goBack, clear, submit;
-    private final Font headerFont = new Font("SansSerif", Font.BOLD, 16); // Example font, adjust as needed
+    private JButton clear, submit;
     private JTextField yearField, monthField, dayField;
     private static final String[] personInfoPlaceholderStrings = {"Mr., Ms., Dr., etc.", "Sammy", "José", "Spartan",
             "Sr., Jr., III, Ph.D., M.S., M.D., etc.", "1 Washington Sq, San Jose, CA 95192", "408-555-6789",
@@ -98,7 +96,6 @@ public class AddPerson extends ApplicationWindow {
         addFocusListenerToTextField(dayField, dayPlaceholder, true);
 
         JPanel textFields = new JPanel();
-        //this.goBack = new JButton("Back");
         this.clear = new JButton("Clear");
         this.submit = new JButton("Submit");
         JLabel label = new JLabel("Add Person");
@@ -156,7 +153,6 @@ public class AddPerson extends ApplicationWindow {
         getContentPane().add(label, BorderLayout.NORTH);
         getContentPane().add(textFields, BorderLayout.CENTER);
         getContentPane().add(buttons, BorderLayout.SOUTH);
-        //buttons.add(this.goBack);
         buttons.add(this.clear);
         buttons.add(this.submit);
     }
@@ -175,12 +171,6 @@ public class AddPerson extends ApplicationWindow {
                 return;
             }
 
-//            if (personInfo[3].getForeground() == Color.GRAY ||
-//                    !InputValidation.isValidName(personInfo[3].getText().trim())) {
-//                JOptionPane.showMessageDialog(null, "Invalid last name");
-//                return;
-//            }
-
             // Validate optional fields
             for (int i = 0; i < personInfo.length; i++) {
                 if(i != 1 && personInfo[i].getForeground() == Color.BLACK){
@@ -193,7 +183,6 @@ public class AddPerson extends ApplicationWindow {
                     }
                 }
             } // end for
-
 
             java.sql.Date sqlDate = null;
 
@@ -279,14 +268,6 @@ public class AddPerson extends ApplicationWindow {
             // Execute the query
             prepStmt.execute();
 
-//            PersonModule.refreshTable();
-//
-//            JOptionPane.showMessageDialog(this, "Person added successfully", "Success",
-//                    JOptionPane.INFORMATION_MESSAGE);
-
-            // Reset the form
-//            initFormFieldsPlaceholders();
-
             // Create a JOptionPane
             JOptionPane pane = new JOptionPane("Persons added successfully", JOptionPane.INFORMATION_MESSAGE);
             JDialog dialog = pane.createDialog(this, "Message");
@@ -301,7 +282,6 @@ public class AddPerson extends ApplicationWindow {
             dispose(); // Close the window
 
             PersonModule.refreshTable();
-
 
         } catch (SQLException e) {
             // Handle SQL related errors
@@ -394,7 +374,6 @@ public class AddPerson extends ApplicationWindow {
 
     /** Helper method for adding ActionListener to buttons. */
     private void setupActionListeners() {
-        //this.goBack.addActionListener(event -> showWindow(new PersonModule()));
         this.clear.addActionListener(event -> initFormFieldsPlaceholders());
         this.submit.addActionListener(event -> {
             try {
@@ -469,12 +448,12 @@ public class AddPerson extends ApplicationWindow {
         dayField.setForeground(Color.GRAY);
     }
 
-    /** Main method. */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(() -> {
-            AddPerson frame = new AddPerson();
-            frame.setVisible(true);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Define the default close operation
-        });
-    }
+//    /** Main method. Not meant to be run directly by itself; for testing purposes only. */
+//    public static void main(String[] args) {
+//        EventQueue.invokeLater(() -> {
+//            AddPerson frame = new AddPerson();
+//            frame.setVisible(true);
+//            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Define the default close operation
+//        });
+//    }
 }

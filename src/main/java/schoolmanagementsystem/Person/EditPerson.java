@@ -3,6 +3,7 @@ package schoolmanagementsystem.Person;
 import schoolmanagementsystem.ApplicationWindow;
 import schoolmanagementsystem.Utilities.DatabaseConnection;
 import schoolmanagementsystem.Utilities.InputValidation;
+import static schoolmanagementsystem.Person.PersonModule.COLUMN_NAMES;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -11,37 +12,23 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import javax.swing.text.PlainDocument;
+import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.util.Calendar;
-import java.awt.Color;
-import java.awt.FlowLayout;
 import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Types;
-import java.awt.BorderLayout;
-import java.awt.Font;
-import java.awt.Dimension;
-import java.awt.EventQueue;
 import javax.swing.text.AbstractDocument;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.DocumentFilter;
 import javax.swing.JTextField;
-import java.awt.Toolkit;
-import java.awt.Component;
 
 
 /** Class for inserting a person into PERSONS table. */
 public class EditPerson extends ApplicationWindow {
     private JTextField[] personInfoTextFields;
     private JButton delete, clear, submit;
-    private final Font headerFont = new Font("SansSerif", Font.BOLD, 16); // Example font, adjust as needed
-//    private JTextField yearField, monthField, dayField;
-    private static final String[] personInfoLabelStrings = {"ID", "Prefix", "First Name", "Middle Name", "Last Name",
-            "Suffix", "Birthdate", "Address", "Phone Number", "Email"};
     private String[] personInfoValues;
     private final int personID;
 
@@ -95,43 +82,66 @@ public class EditPerson extends ApplicationWindow {
 
         // Create Person Info Labels
         JLabel[] personInfoLabels = new JLabel[10];
-
-        for (int i = 0; i < personInfoLabels.length; i++)
-            personInfoLabels[i] = new JLabel(personInfoLabelStrings[i]);
+        for (int i = 0; i < personInfoLabels.length; i++) {
+            personInfoLabels[i] = new JLabel(COLUMN_NAMES[i]);
+        }
 
         // Define the preferred size for the non-birthdate text fields
         int textFieldWidth = 150; // Width in pixels
         int textFieldHeight = new JTextField().getPreferredSize().height; // Default height
 
-
         // Text Fields Initialization
-        for(int i = 0; i < personInfoTextFields.length; i++) {
+        for (int i = 0; i < personInfoTextFields.length; i++) {
             personInfoTextFields[i] = new JTextField();
             ((AbstractDocument) personInfoTextFields[i].getDocument()).setDocumentFilter(new TrimmingDocumentFilter());
             setMaxLength(personInfoTextFields[i], fieldMaxCharLengths[i]);
 
-            if (i < 6 || i > 8) {  // Exclude birthdate fields
-                // Set the preferred size for non-birthdate text fields
-                personInfoTextFields[i].setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
+            // Birthdate fields are handled with specific sizes
+            if (i == 6) { // Year field
+                personInfoTextFields[i].setPreferredSize(new Dimension(30, textFieldHeight));
+            } else if (i == 7 || i == 8) { // Month and Day fields
+                personInfoTextFields[i].setPreferredSize(new Dimension(20, textFieldHeight));
             }
+        }
 
-            // Setup DocumentListener to change foreground color of textfield
+        // Calculate the maximum width needed for non-birthdate text fields
+        int maxTextFieldWidth = textFieldWidth; // Initialize with the default width
+        FontMetrics metrics = getFontMetrics(personInfoTextFields[0].getFont());
+        for (int i = 0; i < personInfoTextFields.length; i++) {
+            if (i < 6 || i > 8) { // Exclude birthdate fields
+                String text = personInfoValues[i]; // Use the initial text values for calculation
+                if(text != null) {
+                    int textWidth = metrics.stringWidth(text) + 10; // Add some padding
+                    maxTextFieldWidth = Math.max(maxTextFieldWidth, textWidth);
+                }
+            }
+        }
+
+        // Set the calculated width for non-birthdate text fields
+        for (int i = 0; i < personInfoTextFields.length; i++) {
+            if (i < 6 || i > 8) { // Exclude birthdate fields
+                personInfoTextFields[i].setPreferredSize(new Dimension(maxTextFieldWidth, textFieldHeight));
+            }
+        }
+
+        // Setup DocumentListener to change foreground color of textfield
+        for(int i = 0; i < personInfoTextFields.length; i++) {
             final int index = i; // Need a final or effectively final variable for use in the inner class
+
             personInfoTextFields[i].getDocument().addDocumentListener(new DocumentListener() {
                 private void updateTextAndColor() {
-//                    SwingUtilities.invokeLater(() -> {
-                        try {
-                            String currentText = personInfoTextFields[index].getText().trim();
+                    try {
+                        String currentText = personInfoTextFields[index].getText().trim();
 //                            personInfoTextFields[index].setText(currentText); // Set trimmed text
 
-                            if (currentText.equals(personInfoValues[index])) {
-                                personInfoTextFields[index].setForeground(Color.GRAY);
-                            } else {
-                                personInfoTextFields[index].setForeground(Color.BLACK);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        if (currentText.equals(personInfoValues[index])) {
+                            personInfoTextFields[index].setForeground(Color.GRAY);
+                        } else {
+                            personInfoTextFields[index].setForeground(Color.BLACK);
                         }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 //                    });
                 }
 
@@ -210,7 +220,7 @@ public class EditPerson extends ApplicationWindow {
         textFieldGroup.addGroup(birthdateGroup);
 
         // Add fields for labels after Birthdate
-        for (int i = 9; i < personInfoTextFields.length; i++) { // Start from index 8, after Birthdate
+        for (int i = 9; i < personInfoTextFields.length; i++) { // Start from index 9, after Birthdate
             textFieldGroup.addComponent(personInfoTextFields[i], GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE);
         }
 
@@ -236,7 +246,7 @@ public class EditPerson extends ApplicationWindow {
                 .addComponent(personInfoTextFields[8]));
 
         // Add all labels and fields after Birthdate
-        for (int i = 7; i < personInfoLabels.length; i++) { // Start from index 6, after Birthdate label
+        for (int i = 7; i < personInfoLabels.length; i++) { // Start from index 7, after Birthdate label
             verticalGroup.addGroup(textFieldsPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(personInfoLabels[i])
                     .addComponent(personInfoTextFields[i+2])); // Adjust index by +2 to account for additional birthdate textfields
@@ -258,12 +268,14 @@ public class EditPerson extends ApplicationWindow {
         getContentPane().add(label, BorderLayout.NORTH);
         getContentPane().add(textFieldsPanel, BorderLayout.CENTER);
         getContentPane().add(buttonsPanel, BorderLayout.SOUTH);
+
+        // Pack the frame to apply the new sizes
+        pack();
     }
+
 
     /**
      * Establishes database connection, prepares and performs the database query to insert person into PERSONS table.
-     *
-     * @return
      */
     private void getPersonInfoFromDB(int personID) {
         // Establish database connection
@@ -425,7 +437,7 @@ public class EditPerson extends ApplicationWindow {
 
                     if (!value.isEmpty() && !isValidForField(i, value)) {
                         JOptionPane.showMessageDialog(null, "Invalid input for "
-                                + personInfoLabelStrings[i]);
+                                + COLUMN_NAMES[i]);
                         return;
                     }
                 } // end for
@@ -474,7 +486,6 @@ public class EditPerson extends ApplicationWindow {
                                     "Invalid Day", JOptionPane.ERROR_MESSAGE);
                             return;
                         }
-
                         // Set the date
                         String dateText = yearText + "-" + monthText + "-" + dayText;
                         sqlDate = java.sql.Date.valueOf(dateText);
@@ -485,7 +496,6 @@ public class EditPerson extends ApplicationWindow {
                         return;
                     }
                 }
-
 
                 // Prepare the SQL statement
                 String sql = "UPDATE PERSONS SET prefix_name = ?, first_name = ?, middle_name = ?, last_name = ?, " +
@@ -603,28 +613,12 @@ public class EditPerson extends ApplicationWindow {
             textField.addFocusListener(new FocusAdapter() {
                 @Override
                 public void focusLost(FocusEvent e) {
-//                    if (textField.getText().isEmpty() || textField.getText().trim().equals("0")) {
-//                    if (textField.getText().trim().equals("0")) {
-//                        textField.setForeground(Color.GRAY);
-//                        textField.setText(placeholder);
-//                    } else
-                        if (textField.getText().trim().length() == 1) {
+                    if (textField.getText().trim().length() == 1) {
                         textField.setText("0" + textField.getText().trim());
                     }
                 }
             });
         }
-//        else{
-//            textField.addFocusListener(new FocusAdapter() {
-//                @Override
-//                public void focusLost(FocusEvent e) {
-//                    if(textField.getText().isEmpty()) {
-//                        textField.setForeground(Color.GRAY);
-//                        textField.setText(placeholder);
-//                    }
-//                }
-//            });
-//        }
     } // end addFocusListenerToTextField()
 
     /** Helper method for adding ActionListener to buttons. */
@@ -803,18 +797,14 @@ public class EditPerson extends ApplicationWindow {
 
             // Add the panel to the dialog's content pane
             getContentPane().add(containerPanel, BorderLayout.CENTER);
-//            pack();
         }
     } // end ClearConfirmationWindow()
 
     /** Returns if the text field values have changed or not */
     private boolean hasChanged(){
         for (int i = 1; i < personInfoTextFields.length; i++) {
-            //System.out.println(personInfoTextFields[i].getText() + ":" + personInfoValues[i]);
-
             String value = personInfoValues[i];
             if(value == null) value = "";
-//            System.out.println(personInfoTextFields[i].getText().trim() + ":" + value);
 
             if (!personInfoTextFields[i].getText().equals(value))
                 return true;
@@ -867,7 +857,7 @@ public class EditPerson extends ApplicationWindow {
         });
     }
 
-    // DeletionConfirmationWindow class
+    /** DeletionConfirmationWindow. Self-explanatory.  */
     public static class DeletionConfirmationWindow extends JDialog {
         private boolean isDeletionConfirmed = false;
         private int personIdToDelete;
@@ -895,12 +885,10 @@ public class EditPerson extends ApplicationWindow {
             inputPanel.add(label);
 
             idField = new JTextField(6);
-//            idField.setMaximumSize(idField.getPreferredSize()); // Ensure width doesn't stretch
-//            idField.setAlignmentX(Component.CENTER_ALIGNMENT);
 
             PlainDocument doc = (PlainDocument) idField.getDocument();
             doc.setDocumentFilter(new DocumentFilter() {
-                public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
                     String string = fb.getDocument().getText(0, fb.getDocument().getLength());
                     string += text;
                     if ((fb.getDocument().getLength() + text.length() - length) <= 9 && string.matches("\\d*")) {
@@ -910,7 +898,7 @@ public class EditPerson extends ApplicationWindow {
                     }
                 }
 
-                public void insertString(DocumentFilter.FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+                public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
                     if ((fb.getDocument().getLength() + string.length()) <= 9 && string.matches("\\d*")) {
                         super.insertString(fb, offset, string, attr);
                     } else {
