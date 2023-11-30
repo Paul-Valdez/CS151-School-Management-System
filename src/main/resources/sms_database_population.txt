@@ -97,13 +97,3 @@ null
 123 Market Street, Campbell, CA 95008
 669-555-0407
 jane.doe@sjsu.edu
-
-Dr.
-Mick
-José
-L.
-null
-1969-08-05
-null
-null
-null

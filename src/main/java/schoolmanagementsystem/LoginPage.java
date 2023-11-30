@@ -1,5 +1,6 @@
 package schoolmanagementsystem;
 
+import schoolmanagementsystem.Person.PersonModule;
 import schoolmanagementsystem.Utilities.DatabaseConnection;
 import java.sql.*;
 import javax.swing.*;
@@ -100,7 +101,7 @@ public class LoginPage extends ApplicationWindow {
 			boolean correctPassword = getPassword.equals(String.valueOf(this.passwordField.getPassword()));
 
 			if (correctUsername && correctPassword) {
-				showWindowAndDispose(new MainMenu());
+				showWindowAndDispose(new PersonModule());
 			} else {
 				JOptionPane.showMessageDialog(this, "Username or password is incorrect!", "Alert", JOptionPane.WARNING_MESSAGE);
 			}

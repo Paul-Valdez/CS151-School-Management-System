@@ -1,6 +1,7 @@
 package schoolmanagementsystem.Person;
 
 import schoolmanagementsystem.ApplicationWindow;
+import schoolmanagementsystem.LoginPage;
 import schoolmanagementsystem.MainMenu;
 import schoolmanagementsystem.Utilities.DatabaseConnection;
 
@@ -59,8 +60,8 @@ public class PersonModule extends ApplicationWindow {
             "Dr. Sammy Spartan (name), 1999-07-14 (birthdate), 408-555-6789 (phone number), etc.",
             INSTRUCTIONS_LABEL_TEXT = "<html>Filter results by typing in the search bar.<br>" +
                     "Sort by a specific criterion by clicking the respective column name.<br>" +
-                    "To Edit or View a person, first select a row by clicking it.<br>" +
-                    "To Delete a person, first click Edit." +
+                    "To Edit or View a Person, first select a row by clicking it.<br>" +
+                    "To Delete a Person, first click Edit.<br>" +
                     "Individual cell content that is selected is copyable using standard keyboard commands." +
                     "</html>";
     protected static final String[] COLUMN_NAMES = {"ID", "Prefix", "First Name", "Middle Name", "Last Name", "Suffix",
@@ -171,7 +172,7 @@ public class PersonModule extends ApplicationWindow {
      * Helper method for adding ActionListener to buttons.
      */
     private void setupActionListeners() {
-        this.backButton.addActionListener(event -> showWindowAndDispose(new MainMenu()));
+        this.backButton.addActionListener(event -> showWindowAndDispose(new LoginPage()));
 
         this.addButton.addActionListener(event -> {
             showWindow(new AddPerson());

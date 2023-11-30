@@ -2,11 +2,6 @@
 
     -- Drop all tables before recreation
     DROP TABLE IF EXISTS PERSONS CASCADE;
-    DROP TABLE IF EXISTS ROLES CASCADE;
-    DROP TABLE IF EXISTS STUDENTS CASCADE;
-    DROP TABLE IF EXISTS EMPLOYEES CASCADE;
-    DROP TABLE IF EXISTS FACULTY CASCADE;
-    DROP TABLE IF EXISTS STAFF CASCADE;
     DROP TABLE IF EXISTS user_login CASCADE;
 
     -- Drop PERSONS id number sequence initial value and recreate
@@ -24,52 +19,6 @@
         address VARCHAR(255),
         phone_number VARCHAR(20),
         email VARCHAR(254)
-    );
-
-    CREATE TABLE ROLES (
-        person_id INT,
-        role_type VARCHAR(50),  -- student, faculty, staff
-        PRIMARY KEY (person_id, role_type),
-        FOREIGN KEY (person_id) REFERENCES PERSONS(id) ON DELETE CASCADE
-    );
-
-    CREATE TABLE STUDENTS (
-        person_id INT PRIMARY KEY,
-        student_type VARCHAR(50),   -- undergraduate, graduate
-        major VARCHAR(100),
-        minor VARCHAR(100),
-        enrollment_status VARCHAR(50),  -- enrolled, leave of absence, graduated
-        advisor_id INT,
-        FOREIGN KEY (person_id) REFERENCES PERSONS(id) ON DELETE CASCADE,
-        FOREIGN KEY (advisor_id) REFERENCES PERSONS(id) ON DELETE CASCADE
-    );
-
-    CREATE TABLE EMPLOYEES (
-        person_id INT PRIMARY KEY,
-        department VARCHAR(100),
-        title VARCHAR(100),
-        employment_type VARCHAR(50),    -- full-time, part-time, contract, temporary, 
-                                        -- volunteer, intern/trainee, seasonal, other
-        employment_status VARCHAR(50),  -- active, retired, resigned, terminated, on leave, contract ended, suspended
-                                        -- furloughed, laid off, probationary
-        office_location VARCHAR(100),
-        FOREIGN KEY (person_id) REFERENCES PERSONS(id) ON DELETE CASCADE
-    );
-
-    CREATE TABLE FACULTY (
-        employee_id INT PRIMARY KEY,
-        faculty_type VARCHAR(50),   -- professor, associate professor, assistant professor, 
-                                    -- lecturer, instructor, adjunct, emeritus, visiting scholar, visiting professor
-        FOREIGN KEY (employee_id) REFERENCES EMPLOYEES(person_id) ON DELETE CASCADE
-    );
-
-    CREATE TABLE STAFF (
-        employee_id INT PRIMARY KEY,
-        staff_type VARCHAR(50), -- Administration, Information Technology, Research,
-                                -- Library, Maintenance and Facilities, Health and Counseling,
-                                -- Student Services, Security, Campus Police, Contractors,
-                                -- Consultants, Volunteers, Student Workers
-        FOREIGN KEY (employee_id) REFERENCES EMPLOYEES(person_id) ON DELETE CASCADE
     );
 
     CREATE TABLE user_login (

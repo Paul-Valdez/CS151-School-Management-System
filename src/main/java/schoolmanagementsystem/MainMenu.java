@@ -1,8 +1,8 @@
 package schoolmanagementsystem;
 
-import schoolmanagementsystem.Faculty.TeacherModule;
+//import schoolmanagementsystem.Faculty.TeacherModule;
 import schoolmanagementsystem.Person.PersonModule;
-import schoolmanagementsystem.Student.StudentModule;
+//import schoolmanagementsystem.Student.StudentModule;
 import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -24,8 +24,8 @@ public class MainMenu extends ApplicationWindow {
 		JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
 		personModule.addActionListener(event -> showWindowAndDispose(new PersonModule()));
-		studentModule.addActionListener(event -> showWindowAndDispose(new StudentModule()));
-		teacherModule.addActionListener(event -> showWindowAndDispose(new TeacherModule()));
+//		studentModule.addActionListener(event -> showWindowAndDispose(new StudentModule()));
+//		teacherModule.addActionListener(event -> showWindowAndDispose(new TeacherModule()));
 		logout.addActionListener(event -> showWindowAndDispose(new LoginPage()));
 
 		panel.add(personModule);
