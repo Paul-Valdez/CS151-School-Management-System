@@ -9,8 +9,7 @@
 package schoolmanagementsystem.Database;
 
 import schoolmanagementsystem.Utilities.DatabaseConnection;
-
-import javax.swing.*;
+import javax.swing.JOptionPane;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PopulateDatabase {
+	
     public static void main(String[] args) {
         init();
     }
@@ -77,12 +77,10 @@ public class PopulateDatabase {
             JOptionPane.showMessageDialog(null, "File Reading Error: " + e.getMessage());
         } finally{
             try {
-                if (ptstmt != null) {
+                if (ptstmt != null)
                     ptstmt.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
+                if (conn != null) 
+                    conn.close();              
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -92,7 +90,7 @@ public class PopulateDatabase {
     private static void processPersonData(PreparedStatement ptstmt, List<String> personData) throws SQLException {
         if (personData.size() == 9) {
             for (int i = 0; i < personData.size(); i++) {
-                if (i == 5) { // Birthdate field
+                if (i == 5) { // Birth date field
                     if(personData.get(i).equals("null"))
                         ptstmt.setNull(i + 1, Types.DATE);
                     else {

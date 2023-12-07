@@ -1,22 +1,24 @@
 package schoolmanagementsystem;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.UIManager;
+import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ApplicationWindow extends JFrame {
+	
 	private static Map<Class<? extends ApplicationWindow>, ApplicationWindow> openWindows = new HashMap<>();
 	public Font headerFont = new Font(Font.SANS_SERIF, Font.BOLD, 16);
 //	public Font regularFont = new Font(Font.SANS_SERIF, Font.PLAIN, 14);
 
 	public ApplicationWindow() {
-		this.setSystemLF();
+		this.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
-
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {
@@ -32,7 +34,7 @@ public class ApplicationWindow extends JFrame {
 			existingWindow.toFront();
 			existingWindow.repaint();
 		} else {
-			setLocationRelativeTo(null);
+			setLocationRelativeTo(null); // Center the window
 			setVisible(true);
 			openWindows.put(windowClass, this);
 		}
@@ -58,9 +60,10 @@ public class ApplicationWindow extends JFrame {
 		}
 	}
 
-	private void setSystemLF() {
+	/** Changes the way Java Swing appears and behaves. */
+	private void setLookAndFeel(String theme) {
 		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			UIManager.setLookAndFeel(theme);
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}

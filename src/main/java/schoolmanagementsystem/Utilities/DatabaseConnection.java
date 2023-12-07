@@ -9,6 +9,7 @@ import java.sql.SQLException;
  * allow database queries to be executed.
  */
 public class DatabaseConnection {
+	
     public static Connection getDBConnection() throws ClassNotFoundException, SQLException {
         Class.forName("org.postgresql.Driver");
 

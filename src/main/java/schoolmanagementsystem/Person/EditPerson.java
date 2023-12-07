@@ -947,13 +947,4 @@ public class EditPerson extends ApplicationWindow {
             return isDeletionConfirmed;
         }
     }
-
-    /** Main method. Not meant to be run directly by itself; for testing purposes only. */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(() -> {
-            EditPerson frame = new EditPerson(100000001);
-            frame.setVisible(true);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Define the default close operation
-        });
-    }
 }

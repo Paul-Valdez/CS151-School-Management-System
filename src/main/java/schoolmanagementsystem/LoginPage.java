@@ -2,15 +2,27 @@ package schoolmanagementsystem;
 
 import schoolmanagementsystem.Person.PersonModule;
 import schoolmanagementsystem.Utilities.DatabaseConnection;
-import java.sql.*;
-import javax.swing.*;
+import java.sql.SQLException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JPasswordField;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
+import javax.swing.BoxLayout;
+import javax.swing.GroupLayout;
+import javax.swing.JOptionPane;
 import javax.swing.border.EmptyBorder;
 import java.awt.EventQueue;
 import java.awt.Color;
 import java.awt.Component;
 
 public class LoginPage extends ApplicationWindow {
-	private JLabel img, schmgtsysLabel, loginPageLabel, usernameLabel, passwordLabel;;
+	
+	private JLabel img, schmgtsysLabel, loginPageLabel, usernameLabel, passwordLabel;
 	private JTextField usernameField;
 	private JPasswordField passwordField;
 	private JPanel panel, textFields;
@@ -30,6 +42,7 @@ public class LoginPage extends ApplicationWindow {
 		this.panel.setLayout(new BoxLayout(this.panel, BoxLayout.PAGE_AXIS));
 		this.textFields = new JPanel();
 		this.schmgtsysLabel = new JLabel("School Management System");
+		this.schmgtsysLabel.setBorder(new EmptyBorder(3, 3, 3, 3));
 		this.schmgtsysLabel.setFont(headerFont);
 		this.schmgtsysLabel.setForeground(Color.RED);
 		this.loginPageLabel = new JLabel("Sign In");
@@ -74,12 +87,8 @@ public class LoginPage extends ApplicationWindow {
 		this.panel.add(this.textFields);
 		this.panel.add(this.submit);
 
-		getContentPane().add(this.panel);
-
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-//		this.pack();
-		setSize(250, 300); // Set the frame size
+		setContentPane(this.panel);
+		pack();
 	}
 
 	private void loginUser() throws ClassNotFoundException, SQLException {
@@ -100,15 +109,10 @@ public class LoginPage extends ApplicationWindow {
 			boolean correctUsername = getUsername.equals(this.usernameField.getText());
 			boolean correctPassword = getPassword.equals(String.valueOf(this.passwordField.getPassword()));
 
-			if (correctUsername && correctPassword) {
+			if (correctUsername && correctPassword)
 				showWindowAndDispose(new PersonModule());
-			} else {
+			else
 				JOptionPane.showMessageDialog(this, "Username or password is incorrect!", "Alert", JOptionPane.WARNING_MESSAGE);
-			}
 		}
-	}
-
-	public static void main(String args[]) {
-		EventQueue.invokeLater(() -> new LoginPage().showWindow());
 	}
 }

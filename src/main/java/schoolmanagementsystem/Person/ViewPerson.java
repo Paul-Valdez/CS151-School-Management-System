@@ -118,7 +118,7 @@ public class ViewPerson extends ApplicationWindow {
     /**
      * Establishes database connection, prepares and performs the database query to insert person into PERSONS table.
      *
-     * @return
+     * @return null
      */
     private String[] viewPerson(int personID) {
         // Establish database connection
@@ -173,14 +173,5 @@ public class ViewPerson extends ApplicationWindow {
         }
 
         return new String[0];
-    } // end addPerson()
-
-//    /** Main method. Not meant to be run directly by itself; for testing purposes only. */
-//    public static void main(String[] args) {
-//        EventQueue.invokeLater(() -> {
-//            ViewPerson frame = new ViewPerson();
-//            frame.setVisible(true);
-//            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Define the default close operation
-//        });
-//    }
+    }
 }

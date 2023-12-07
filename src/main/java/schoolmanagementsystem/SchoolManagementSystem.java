@@ -5,17 +5,11 @@
  */
 package schoolmanagementsystem;
 
-import java.awt.*;
+import java.awt.EventQueue;
 
-/**
- * @author dell
- */
 public class SchoolManagementSystem {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        new LoginPage().showWindow();
+    	EventQueue.invokeLater(() -> new LoginPage().showWindow());
     }
 }
