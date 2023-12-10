@@ -2,7 +2,6 @@ package schoolmanagementsystem.Person;
 
 import schoolmanagementsystem.ApplicationWindow;
 import schoolmanagementsystem.LoginPage;
-import schoolmanagementsystem.MainMenu;
 import schoolmanagementsystem.Utilities.DatabaseConnection;
 
 import java.awt.EventQueue;
@@ -57,7 +56,7 @@ public class PersonModule extends ApplicationWindow {
     private static JTable personTable;
     private TableRowSorter<DefaultTableModel> tableRowSorter;
     private static final String SEARCH_PLACEHOLDER = "Enter search criteria e.g.: 123456789 (ID), " +
-            "Dr. Sammy Spartan (name), 1999-07-14 (birthdate), 408-555-6789 (phone number), etc.",
+            "Dr. Sammy Spartan (name), student OR teacher (type), 1999-07-14 (birthdate), 408-555-6789 (phone number), etc.",
             INSTRUCTIONS_LABEL_TEXT = "<html>Filter results by typing in the search bar.<br>" +
                     "Sort by a specific criterion by clicking the respective column name.<br>" +
                     "To Edit or View a Person, first select a row by clicking it.<br>" +
@@ -65,8 +64,8 @@ public class PersonModule extends ApplicationWindow {
                     "Individual cell content that is selected is copyable using standard keyboard commands." +
                     "</html>";
     protected static final String[] COLUMN_NAMES = {"ID", "Prefix", "First Name", "Middle Name", "Last Name", "Suffix",
-            "Birthdate", "Address", "Phone Number", "Email"};
-    private static final int[] COLUMN_WIDTHS = {72, 40, 96, 96, 96, 40, 80, 200, 88, 160};
+            "Birthdate", "Address", "Phone Number", "Email", "Type"};
+    private static final int[] COLUMN_WIDTHS = {72, 40, 96, 96, 96, 40, 80, 200, 88, 160, 56};
 
     // Default constructor
     public PersonModule() {
@@ -219,7 +218,7 @@ public class PersonModule extends ApplicationWindow {
 
             // Process the ResultSet
             while (rs.next()) {
-                Object[] rowData = new Object[10];
+                Object[] rowData = new Object[11];
                 rowData[0] = rs.getInt("id");
                 rowData[1] = rs.getString("prefix_name");
                 rowData[2] = rs.getString("first_name");
@@ -230,13 +229,14 @@ public class PersonModule extends ApplicationWindow {
                 rowData[7] = rs.getString("address");
                 rowData[8] = rs.getString("phone_number");
                 rowData[9] = rs.getString("email");
+                rowData[10] = rs.getString("type");
                 dataList.add(rowData);
             }
 
             // Execute the query
             prepStmt.executeQuery();
 
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             // Close resources
@@ -284,7 +284,7 @@ public class PersonModule extends ApplicationWindow {
         DefaultTableModel tableModel = createTableModel();
         personTable = new JTable(tableModel){
             // Override to display tooltip with cell content
-            public String getToolTipText(MouseEvent e) {
+            public String getToolTipText(MouseEvent e) { // Hover over cell
                 Point p = e.getPoint();
                 int rowIndex = rowAtPoint(p);
                 int colIndex = columnAtPoint(p);

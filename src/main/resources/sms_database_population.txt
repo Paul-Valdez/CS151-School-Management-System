@@ -7,6 +7,7 @@ Ph.D.
 1 Washington Sq, San Jose, CA 95192
 408-555-6789
 sammy.spartan@sjsu.edu
+Teacher
 
 Mr.
 Paul
@@ -17,6 +18,7 @@ null
 200 E Santa Clara St, San Jose, CA 95113
 408-555-1337
 paul.valdez@sjsu.edu
+Student
 
 Mr.
 Walter
@@ -27,6 +29,7 @@ Sr.
 308 Negra Arroyo Lane, Albuquerque, New Mexico, 87104
 null
 white.walter@wynnehighschool.org
+Teacher
 
 null
 James
@@ -37,6 +40,7 @@ null
 null
 null
 null
+Student
 
 null
 Saul
@@ -47,6 +51,7 @@ Esq.
 9800 Montgomery Blvd, Albuquerque, NM 87111
 (505) 503-4455
 null
+Teacher
 
 null
 Gene
@@ -57,6 +62,7 @@ null
 2010 Cinnamon Drive, Omaha, NE 68144
 null
 null
+Student
 
 Dr.
 Dre
@@ -67,6 +73,7 @@ null
 2220 Colorado Ave, Santa Monica, CA 90404
 213-555-5691
 dr.dre@aftermathentertainment.com
+Teacher
 
 Prof.
 Chaos
@@ -77,6 +84,7 @@ null
 710 Main Street, South Park, CO 80420
 719-555-7991
 null
+Teacher
 
 null
 Greg
@@ -87,6 +95,7 @@ null
 null
 831-222-2243
 arbiter@gjonesbass.com
+Teacher
 
 Ms.
 Jane
@@ -97,3 +106,4 @@ null
 123 Market Street, Campbell, CA 95008
 669-555-0407
 jane.doe@sjsu.edu
+Student

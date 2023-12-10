@@ -61,7 +61,7 @@ public class ViewPerson extends ApplicationWindow {
     /** Initializes form components. */
     private void initComponents() {
         // Labels
-        JLabel[] personInfoLabel = new JLabel[9];
+        JLabel[] personInfoLabel = new JLabel[11];
 
         for (int i = 0; i < personInfoLabel.length; i++)
             personInfoLabel[i] = new JLabel(COLUMN_NAMES[i]);
@@ -153,9 +153,6 @@ public class ViewPerson extends ApplicationWindow {
         } catch (SQLException e) {
             // Handle SQL related errors
             JOptionPane.showMessageDialog(null, "SQL Error: " + e.getMessage());
-        } catch (ClassNotFoundException e) {
-            // Handle missing JDBC driver
-            JOptionPane.showMessageDialog(null, "Driver Error: " + e.getMessage());
         } catch (IllegalStateException e) {
             // Handle database connection errors
             JOptionPane.showMessageDialog(null, "Database Connection Error: " + e.getMessage());

@@ -36,7 +36,7 @@ public class PopulateDatabase {
 
             // Prepare the SQL statement
             String sql = "INSERT INTO PERSONS (prefix_name, first_name, middle_name, last_name, suffix_name, " +
-                    "birthdate, address, phone_number, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    "birthdate, address, phone_number, email, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             ptstmt = conn.prepareStatement(sql);
 
             // Read values from file
@@ -66,9 +66,6 @@ public class PopulateDatabase {
 
         } catch(SQLException e){    // Handle SQL related errors
             JOptionPane.showMessageDialog(null, "SQL Error: " + e.getMessage());
-        } catch(ClassNotFoundException e){
-            // Handle missing JDBC driver
-            JOptionPane.showMessageDialog(null, "Driver Error: " + e.getMessage());
         } catch(IllegalStateException e){
             // Handle database connection errors
             JOptionPane.showMessageDialog(null, "Database Connection Error: " + e.getMessage());
@@ -90,7 +87,7 @@ public class PopulateDatabase {
     }
 
     private static void processPersonData(PreparedStatement ptstmt, List<String> personData) throws SQLException {
-        if (personData.size() == 9) {
+        if (personData.size() == 10) {
             for (int i = 0; i < personData.size(); i++) {
                 if (i == 5) { // Birthdate field
                     if(personData.get(i).equals("null"))

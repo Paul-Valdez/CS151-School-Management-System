@@ -326,9 +326,6 @@ public class EditPerson extends ApplicationWindow {
         } catch (SQLException e) {
             // Handle SQL related errors
             JOptionPane.showMessageDialog(null, "SQL Error: " + e.getMessage());
-        } catch (ClassNotFoundException e) {
-            // Handle missing JDBC driver
-            JOptionPane.showMessageDialog(null, "Driver Error: " + e.getMessage());
         } catch (IllegalStateException e) {
             // Handle database connection errors
             JOptionPane.showMessageDialog(null, "Database Connection Error: " + e.getMessage());
@@ -366,9 +363,6 @@ public class EditPerson extends ApplicationWindow {
         catch (SQLException e) {
             // Handle SQL related errors
             JOptionPane.showMessageDialog(null, "SQL Error: " + e.getMessage());
-        } catch (ClassNotFoundException e) {
-            // Handle missing JDBC driver
-            JOptionPane.showMessageDialog(null, "Driver Error: " + e.getMessage());
         } catch (IllegalStateException e) {
             // Handle database connection errors
             JOptionPane.showMessageDialog(null, "Database Connection Error: " + e.getMessage());
@@ -544,9 +538,6 @@ public class EditPerson extends ApplicationWindow {
         } catch (SQLException e) {
             // Handle SQL related errors
             JOptionPane.showMessageDialog(null, "SQL Error: " + e.getMessage());
-        } catch (ClassNotFoundException e) {
-            // Handle missing JDBC driver
-            JOptionPane.showMessageDialog(null, "Driver Error: " + e.getMessage());
         } catch (IllegalStateException e) {
             // Handle database connection errors
             JOptionPane.showMessageDialog(null, "Database Connection Error: " + e.getMessage());
@@ -706,9 +697,6 @@ public class EditPerson extends ApplicationWindow {
         } catch (SQLException e) {
             // Handle SQL related errors
             JOptionPane.showMessageDialog(null, "SQL Error: " + e.getMessage());
-        } catch (ClassNotFoundException e) {
-            // Handle missing JDBC driver
-            JOptionPane.showMessageDialog(null, "Driver Error: " + e.getMessage());
         } catch (IllegalStateException e) {
             // Handle database connection errors
             JOptionPane.showMessageDialog(null, "Database Connection Error: " + e.getMessage());

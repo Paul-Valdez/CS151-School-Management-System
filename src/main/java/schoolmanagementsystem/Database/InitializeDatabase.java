@@ -50,8 +50,6 @@ public class InitializeDatabase {
             runner.runScript(reader);
 
             System.out.println("Database initialization script executed successfully!");
-        } catch (SQLException ex) {
-            System.out.println("SQL Error: " + ex.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

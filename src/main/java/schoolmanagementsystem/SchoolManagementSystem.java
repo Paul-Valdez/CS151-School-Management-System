@@ -5,9 +5,7 @@
  */
 package schoolmanagementsystem;
 
-import java.awt.*;
-
-/**
+/** Entry point/bootstrap class for the School Management System application.
  * @author dell
  */
 public class SchoolManagementSystem {
@@ -16,6 +14,15 @@ public class SchoolManagementSystem {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        new LoginPage().showWindow();
+        try {
+            new LoginPage().showWindow();
+        } catch (Exception e) {
+            // Log the exception or show an error dialog
+            System.err.println("An error occurred: " + e.getMessage());
+            e.printStackTrace();
+
+            // Exit the application
+            System.exit(1);
+        }
     }
 }

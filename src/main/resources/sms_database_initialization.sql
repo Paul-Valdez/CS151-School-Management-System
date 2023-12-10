@@ -18,7 +18,8 @@
         birthdate DATE,
         address VARCHAR(255),
         phone_number VARCHAR(20),
-        email VARCHAR(254)
+        email VARCHAR(254),
+        type VARCHAR(7) NOT NULL -- student or teacher
     );
 
     CREATE TABLE user_login (

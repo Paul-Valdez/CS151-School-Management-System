@@ -4,10 +4,7 @@ import schoolmanagementsystem.ApplicationWindow;
 import schoolmanagementsystem.Utilities.DatabaseConnection;
 import schoolmanagementsystem.Utilities.InputValidation;
 
-import java.awt.EventQueue;
-import java.awt.FlowLayout;
-import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.*;
@@ -21,12 +18,14 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
+
 /** Class for inserting a person into PERSONS table. */
 public class AddPerson extends ApplicationWindow {
 
     private JTextField[] personInfo;
     private JButton clear, submit;
     private JTextField yearField, monthField, dayField;
+    private JComboBox<String> selectionComboBox;
     private static final String[] personInfoPlaceholderStrings = {"Mr., Ms., Dr., etc.", "Sammy", "José", "Spartan",
             "Sr., Jr., III, Ph.D., M.S., M.D., etc.", "1 Washington Sq, San Jose, CA 95192", "408-555-6789",
             "sammy.spartan@sjsu.edu"};
@@ -95,6 +94,17 @@ public class AddPerson extends ApplicationWindow {
         addFocusListenerToTextField(monthField, monthPlaceholder, true);
         addFocusListenerToTextField(dayField, dayPlaceholder, true);
 
+
+        // Initialize JComboBox with options
+        String[] options = {"Student", "Teacher"};
+        selectionComboBox = new JComboBox<>(options);
+
+        JLabel selectionLabel = new JLabel("Type");
+
+        // Set the default selected option to null
+        selectionComboBox.setSelectedIndex(-1);
+
+
         JPanel textFields = new JPanel();
         this.clear = new JButton("Clear");
         this.submit = new JButton("Submit");
@@ -125,6 +135,12 @@ public class AddPerson extends ApplicationWindow {
                 .addComponent(monthField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addComponent(dayField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE));
 
+
+        // Add the selection label and JComboBox to the layout groups
+        labelGroup.addComponent(selectionLabel);
+        fieldGroup.addComponent(selectionComboBox);
+
+
         // Add the label and field groups to the horizontal group
         hGroup.addGroup(labelGroup);
         hGroup.addGroup(fieldGroup);
@@ -143,6 +159,13 @@ public class AddPerson extends ApplicationWindow {
                 .addComponent(yearField)
                 .addComponent(monthField)
                 .addComponent(dayField));
+
+
+
+        // Add the selection label and JComboBox to the vertical group
+        verticalGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                .addComponent(selectionLabel)
+                .addComponent(selectionComboBox));
 
         layout.setVerticalGroup(verticalGroup);
 
@@ -168,6 +191,12 @@ public class AddPerson extends ApplicationWindow {
             if (personInfo[1].getForeground() == Color.GRAY ||
                     !InputValidation.isValidName(personInfo[1].getText().trim())) {
                 JOptionPane.showMessageDialog(null, "Invalid first name");
+                return;
+            }
+
+            // Validate mandatory type field
+            if (selectionComboBox.getSelectedIndex() == -1){
+                JOptionPane.showMessageDialog(null, "Type not selected. Please choose \"Student\" or \"Teacher\".");
                 return;
             }
 
@@ -245,7 +274,7 @@ public class AddPerson extends ApplicationWindow {
 
             // Prepare the SQL statement
             String sql = "INSERT INTO PERSONS (prefix_name, first_name, middle_name, last_name, suffix_name, " +
-                    "address, phone_number, email, birthdate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    "address, phone_number, email, birthdate, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             prepStmt = conn.prepareStatement(sql);
 
@@ -264,6 +293,10 @@ public class AddPerson extends ApplicationWindow {
             } else {
                 prepStmt.setNull(personInfo.length + 1, Types.DATE);
             }
+
+            // Set type value for PreparedStatement
+            prepStmt.setString(personInfo.length + 2, (String) selectionComboBox.getSelectedItem());
+
 
             // Execute the query
             prepStmt.execute();
@@ -286,9 +319,6 @@ public class AddPerson extends ApplicationWindow {
         } catch (SQLException e) {
             // Handle SQL related errors
             JOptionPane.showMessageDialog(null, "SQL Error: " + e.getMessage());
-        } catch (ClassNotFoundException e) {
-            // Handle missing JDBC driver
-            JOptionPane.showMessageDialog(null, "Driver Error: " + e.getMessage());
         } catch (IllegalStateException e) {
             // Handle database connection errors
             JOptionPane.showMessageDialog(null, "Database Connection Error: " + e.getMessage());
