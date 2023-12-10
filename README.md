@@ -25,7 +25,7 @@ The system will feature:
 
 **Description** 
 -  
-Our team is developing an integrated management system to streamline the handling of student and faculty data, addressing current challenges in tracking and classification. Utilizing MYSQL DBMS for data storage and leveraging JSWING on NETBEANS 8.2 for a user-friendly interface. 
+Our team is developing an integrated management system to streamline the handling of student and faculty data, addressing current challenges in tracking and classification. Utilizing a PostgreSQL database hosted on Supabase for data storage and leveraging JSWING on Eclipse for a user-friendly interface. 
 
 Beyond its core functionalities, this project offers team members valuable hands-on experience in MYSQL CRUD operations, data transactions, and interface design, ensuring technical growth alongside project completion.
 
