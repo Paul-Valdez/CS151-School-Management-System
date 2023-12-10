@@ -20,17 +20,14 @@ Our project addresses the following issues:
 **Functionality**  
 - 
 The system will feature:
--   Student's Registration Module: Captures essential student details for enrollment.
--   Fee Submission Module: Manages student fee records.
--   Report Card Module: Tracks student academic performance.
--   Teacher's Module: Records faculty data and professional engagements.
+-   Student and Teacher's Registration Module: Captures essential personal details for enrollment and employment.
     
 
 **Description** 
 -  
-Our team is developing an integrated management system to streamline the handling of student and faculty data, addressing current challenges in tracking and classification. Utilizing a PostgreSQL database hosted on Supabase for data storage and leveraging JSWING on Eclipse for a user-friendly interface. 
+Our team is developing an integrated management system to streamline the handling of student and faculty data, addressing current challenges in tracking and classification. Utilizing a PostgreSQL database hosted on Supabase for data storage and leveraging JSWING for a user-friendly interface. 
 
-Beyond its core functionalities, this project offers team members valuable hands-on experience in MYSQL CRUD operations, data transactions, and interface design, ensuring technical growth alongside project completion.
+Beyond its core functionalities, this project offers team members valuable hands-on experience in SQL CRUD operations, data transactions, and interface design, ensuring technical growth alongside project completion.
 
 
 
