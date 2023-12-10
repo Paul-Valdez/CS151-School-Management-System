@@ -101,13 +101,13 @@ public class PersonModule extends ApplicationWindow {
         Font newFont = currentFont.deriveFont(currentFont.getSize2D() * 1.15f); // Increase size by 50%
         instructionsLabel.setFont(newFont);//        instructionsLabel.setFont(regularFont);
         instructionsLabel.setOpaque(true);
-        instructionsLabel.setPreferredSize(new Dimension(900, 80));
+        instructionsLabel.setPreferredSize(new Dimension(1025, 100));
         panel1.add(instructionsLabel);
 
 
         // Search text field setup
         searchTextField = new JTextField();
-        searchTextField.setPreferredSize(new Dimension(930, 30));
+        searchTextField.setPreferredSize(new Dimension(1025, 30));
         panel1.add(searchTextField);
         setSearchFocusListeners();
 
@@ -116,15 +116,15 @@ public class PersonModule extends ApplicationWindow {
 
         // Button panel setup
         JPanel buttonPanel = new JPanel(new GridBagLayout()); // 1 row, 5 cols, 5px hgap, 5px vgap
-        buttonPanel.setPreferredSize(new Dimension(930, 25));
+        buttonPanel.setPreferredSize(new Dimension(1050, 25));
 
         // Buttons setup
-        backButton = new JButton("Back");
+        backButton = new JButton("Logout");
         addButton = new JButton("Add");
         editButton = new JButton("Edit");
         viewButton = new JButton("View");
         buttonPanel.add(backButton);
-        buttonPanel.add(Box.createHorizontalStrut(722)); // Spacer setup
+        buttonPanel.add(Box.createHorizontalStrut(810)); // Spacer setup
         buttonPanel.add(addButton);
         buttonPanel.add(editButton);
         buttonPanel.add(viewButton);
@@ -153,7 +153,7 @@ public class PersonModule extends ApplicationWindow {
         // Finalize frame setup
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Set the default close operation
         setContentPane(panel1); // Add panel to the frame
-        setSize(960, 525); // Set the frame size
+        setSize(1050, 540); // Set the frame size
         setLocationRelativeTo(null); // Center the frame
 
         setupActionListeners();
@@ -349,7 +349,7 @@ public class PersonModule extends ApplicationWindow {
 
         // Add personTable to scroll pane
         JScrollPane tableScrollPane = new JScrollPane(personTable);
-        tableScrollPane.setPreferredSize(new Dimension(930, 325));
+        tableScrollPane.setPreferredSize(new Dimension(1025, 325));
         tableScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         panel1.add(tableScrollPane); // Add the JScrollPane containing the JTable to the panel
