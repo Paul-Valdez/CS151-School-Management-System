@@ -153,10 +153,9 @@ public class PersonModule extends ApplicationWindow {
 		getContentPane().add(instructionsLabel, BorderLayout.NORTH);
 		getContentPane().add(panel, BorderLayout.CENTER);
 		getContentPane().add(buttonPanel, BorderLayout.SOUTH);
-		
-		this.searchTextField.setText("");
 
 		pack();
+		this.searchTextField.setText("");
 		setupActionListeners();
 	}
 
