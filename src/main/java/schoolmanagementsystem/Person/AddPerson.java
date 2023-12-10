@@ -36,8 +36,8 @@ public class AddPerson extends ApplicationWindow {
 	/** Default constructor for AddPerson class. */
 	public AddPerson() {
 		this.initComponents();
-		this.pack(); // Adjusts the window size based on the preferred sizes of its components
-		this.setLocationRelativeTo(null); // This will center the window
+		pack(); // Adjusts the window size based on the preferred sizes of its components
+		setLocationRelativeTo(null); // This will center the window
 
 		// Add window listener to request focus for the frame
 		this.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -54,6 +54,7 @@ public class AddPerson extends ApplicationWindow {
 
 	/** Initializes form components. */
 	private void initComponents() {
+		setTitle("Add Person");
 		// Labels
 		int[] fieldMaxLengths = { 50, 100, 100, 100, 50, 255, 120, 100 };
 		JLabel[] personInfoLabel = new JLabel[8];
@@ -98,9 +99,6 @@ public class AddPerson extends ApplicationWindow {
 		JPanel textFields = new JPanel();
 		this.clear = new JButton("Clear");
 		this.submit = new JButton("Submit");
-		JLabel label = new JLabel("Add Person");
-		label.setFont(headerFont);
-		label.setHorizontalAlignment(SwingConstants.CENTER);
 		JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
 		GroupLayout layout = new GroupLayout(textFields);
@@ -150,7 +148,6 @@ public class AddPerson extends ApplicationWindow {
 		setupActionListeners();
 
 		// Add components to the content pane
-		getContentPane().add(label, BorderLayout.NORTH);
 		getContentPane().add(textFields, BorderLayout.CENTER);
 		getContentPane().add(buttons, BorderLayout.SOUTH);
 		buttons.add(this.clear);
@@ -450,13 +447,5 @@ public class AddPerson extends ApplicationWindow {
 		monthField.setForeground(Color.GRAY);
 		dayField.setText("DD");
 		dayField.setForeground(Color.GRAY);
-	}
-
-	/**
-	 * Main method. Not meant to be run directly by itself; for testing purposes
-	 * only.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(() -> new AddPerson().showWindow());
 	}
 }

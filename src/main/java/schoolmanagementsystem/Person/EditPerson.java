@@ -71,13 +71,9 @@ public class EditPerson extends ApplicationWindow {
 
     /** Initializes form components */
     private void initComponents() {
+        setTitle("Edit Person");
         // Max lengths for textFields
         int[] fieldMaxCharLengths = {9, 50, 100, 100, 100, 50, 4, 2, 2, 255, 20, 254};
-
-        // Labels
-        JLabel label = new JLabel("Edit Person");
-        label.setFont(headerFont);  // Ensure headerFont is initialized
-        label.setHorizontalAlignment(SwingConstants.CENTER);
 
         // Create Person Info Labels
         JLabel[] personInfoLabels = new JLabel[10];
@@ -264,7 +260,6 @@ public class EditPerson extends ApplicationWindow {
         setupActionListeners();
 
         // Add components to the content pane
-        getContentPane().add(label, BorderLayout.NORTH);
         getContentPane().add(textFieldsPanel, BorderLayout.CENTER);
         getContentPane().add(buttonsPanel, BorderLayout.SOUTH);
 

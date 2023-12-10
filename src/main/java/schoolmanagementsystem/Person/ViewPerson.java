@@ -28,8 +28,8 @@ public class ViewPerson extends ApplicationWindow {
     /** Default constructor for AddPerson class. */
     public ViewPerson() {
         this.initComponents();
-        this.pack(); // Adjusts the window size based on the preferred sizes of its components
-        this.setLocationRelativeTo(null); // This will center the window
+        pack(); // Adjusts the window size based on the preferred sizes of its components
+        setLocationRelativeTo(null); // This will center the window
 
         // Add window listener to request focus for the frame
         this.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -42,8 +42,8 @@ public class ViewPerson extends ApplicationWindow {
     public ViewPerson(int personID) {
         this.initComponents();
         this.viewPerson(personID);
-        this.pack(); // Adjusts the window size based on the preferred sizes of its components
-        this.setLocationRelativeTo(null); // This will center the window
+        pack(); // Adjusts the window size based on the preferred sizes of its components
+        setLocationRelativeTo(null); // This will center the window
 
         // Add window listener to request focus for the frame
         this.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -60,6 +60,7 @@ public class ViewPerson extends ApplicationWindow {
 
     /** Initializes form components. */
     private void initComponents() {
+        setTitle("View Person");
         // Labels
         JLabel[] personInfoLabel = new JLabel[9];
 
@@ -75,9 +76,6 @@ public class ViewPerson extends ApplicationWindow {
         }
 
         JPanel textFields = new JPanel();
-        JLabel label = new JLabel("View Person");
-        label.setFont(headerFont);
-        label.setHorizontalAlignment(SwingConstants.CENTER);
         JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
         GroupLayout layout = new GroupLayout(textFields);
@@ -110,7 +108,6 @@ public class ViewPerson extends ApplicationWindow {
         layout.setVerticalGroup(verticalGroup);
 
         // Add components to the content pane
-        getContentPane().add(label, BorderLayout.NORTH);
         getContentPane().add(textFields, BorderLayout.CENTER);
         getContentPane().add(buttons, BorderLayout.SOUTH);
     }

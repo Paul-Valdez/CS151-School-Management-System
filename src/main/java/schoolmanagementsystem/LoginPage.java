@@ -32,6 +32,7 @@ public class LoginPage extends ApplicationWindow {
 	}
 
 	private void initComponents() {
+		setTitle("Login");
 		this.img = new JLabel(new ImageIcon(getClass().getResource("/SJSU_Seal.svg.png")));
 		this.img.setBorder(new EmptyBorder(3, 3, 3, 3));
 		this.usernameField = new JTextField();

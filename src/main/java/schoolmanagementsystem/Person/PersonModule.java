@@ -70,7 +70,7 @@ public class PersonModule extends ApplicationWindow {
 	// Default constructor
 	public PersonModule() {
 		this.initComponents(); // Initialize components
-		// this.setLocationRelativeTo(null); // Center the window
+		this.setLocationRelativeTo(null); // Center the window
 
 		// Add window listener to request focus for the frame
 		this.addWindowListener(new WindowAdapter() {
@@ -88,6 +88,7 @@ public class PersonModule extends ApplicationWindow {
 	}
 
 	private void initComponents() {
+		setTitle("Admin Portal");
 		// Main panel setup
 		this.panel = new JPanel();
 		this.panel.setLayout(new BoxLayout(this.panel, BoxLayout.PAGE_AXIS));
