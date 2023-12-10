@@ -59,7 +59,7 @@ public class PersonModule extends ApplicationWindow {
 	private static JTable personTable;
 	private TableRowSorter<DefaultTableModel> tableRowSorter;
 	private static final String SEARCH_PLACEHOLDER = "Enter search criteria e.g.: 123456789 (ID), "
-			+ "Dr. Sammy Spartan (name), 1999-07-14 (birthdate), 408-555-6789 (phone number), etc.",
+			+ "Dr. Sammy Spartan (name), 1999-07-14 (birthdate), 408-555-6789 (phone number), etc.\t\t",
 			INSTRUCTIONS_LABEL_TEXT = "<html>Filter results by typing in the search bar.<br>"
 					+ "Sort by a specific criterion by clicking the respective column name.<br>"
 					+ "To Edit or View a Person, first select a row by clicking it.<br>"
