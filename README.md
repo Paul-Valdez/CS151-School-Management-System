@@ -1,5 +1,8 @@
 # School Management System
 
+**Project Report**
+https://docs.google.com/document/d/1ID_DY9BFTDegdN5ANLDF8RbqGKMw3p8J6pPjvrQAFyY/edit?usp=sharing
+
 **Team 3** 
  - 
 Paul Valdez, Gabriel Peregrino, Royce Li, Steve Nguyen
@@ -29,8 +32,7 @@ Our team is developing an integrated management system to streamline the handlin
 
 Beyond its core functionalities, this project offers team members valuable hands-on experience in MYSQL CRUD operations, data transactions, and interface design, ensuring technical growth alongside project completion.
 
-**Project Report**
-https://docs.google.com/document/d/1ID_DY9BFTDegdN5ANLDF8RbqGKMw3p8J6pPjvrQAFyY/edit?usp=sharing
+
 
 <!--stackedit_data:
 eyJoaXN0b3J5IjpbMTAwNTMyNTM3NiwtMTc2MjA5MzMyNiwtMT
