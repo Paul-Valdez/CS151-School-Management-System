@@ -10,6 +10,8 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
+import java.awt.Dimension;
+import java.awt.FontMetrics;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseEvent;
@@ -29,6 +31,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.ToolTipManager;
+import javax.swing.border.EmptyBorder;
 import javax.swing.ListSelectionModel;
 import javax.swing.Action;
 import javax.swing.AbstractAction;
@@ -101,8 +104,9 @@ public class PersonModule extends ApplicationWindow {
 		this.instructionsLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
 		// Search text field setup
-		this.searchTextField = new JTextField();
+		this.searchTextField = new JTextField(SEARCH_PLACEHOLDER);
 		this.panel.add(searchTextField);
+
 		setSearchFocusListeners();
 
 		// Create Table
@@ -141,10 +145,16 @@ public class PersonModule extends ApplicationWindow {
 			}
 		});
 
+		instructionsLabel.setBorder(new EmptyBorder(3, 3, 3, 3));
+		panel.setBorder(new EmptyBorder(3, 3, 3, 3));
+		buttonPanel.setBorder(new EmptyBorder(3, 3, 3, 3));
+		
 		// Finalize frame setup
 		getContentPane().add(instructionsLabel, BorderLayout.NORTH);
 		getContentPane().add(panel, BorderLayout.CENTER);
 		getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+		
+		this.searchTextField.setText("");
 
 		pack();
 		setupActionListeners();
