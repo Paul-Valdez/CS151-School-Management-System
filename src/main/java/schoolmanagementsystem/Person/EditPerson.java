@@ -22,7 +22,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Types;
 import javax.swing.text.AbstractDocument;
-import javax.swing.JTextField;
 
 
 /** Class for inserting a person into PERSONS table. */
@@ -496,6 +495,14 @@ public class EditPerson extends ApplicationWindow {
                         return;
                     }
                 }
+                
+                // Set EMPTY to NULL
+                String[] emptyToNullStrings = new String[personInfoValues.length];
+                for (int i = 0; i < personInfoValues.length; i++) {
+                    if (!this.personInfoTextFields[i].getText().isEmpty()) {
+                        emptyToNullStrings[i] = this.personInfoTextFields[i].getText().trim();
+                    }
+                }
 
                 // Prepare the SQL statement
                 String sql = "UPDATE PERSONS SET prefix_name = ?, first_name = ?, middle_name = ?, last_name = ?, " +
@@ -515,7 +522,7 @@ public class EditPerson extends ApplicationWindow {
                         j = 8; // skip birthdate fields
                     }
                     else{
-                        prepStmt.setString(i, personInfoTextFields[j].getText().trim());
+                        prepStmt.setString(i, emptyToNullStrings[j]);
                     }
                 }
 
@@ -726,79 +733,21 @@ public class EditPerson extends ApplicationWindow {
         }
     }
 
+    /** Resets text fields to their original person info values */
     private void clearChanges(){
         // Open confirmation window to confirm the clearance
-        ClearConfirmationWindow confirmWindow = new ClearConfirmationWindow(this);
-        confirmWindow.setLocationRelativeTo(this); // Center the dialog
-        confirmWindow.setVisible(true); // This will block until the dialog is closed
+        int result = JOptionPane.showConfirmDialog(this, "Press OK to clear changes", "Clear Changes", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (result == JOptionPane.OK_OPTION) {
+            for (int i = 1; i < personInfoTextFields.length; i++) {
+                String value = personInfoValues[i];
+                if(value == null || value.isEmpty())
+                    personInfoTextFields[i].setText("");
+                else
+                    personInfoTextFields[i].setText(personInfoValues[i]);
+            }
+            JOptionPane.showMessageDialog(this, "All changes cleared.", "Success", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
-
-    /** Resets text fields to their original person info values */
-    public class ClearConfirmationWindow extends JDialog {
-        public ClearConfirmationWindow(JFrame parent) {
-            super(parent, "Confirm Clear", true); // true for modal
-            initializeUI();
-        }
-
-        private void initializeUI() {
-            setSize(270, 100);
-            setLayout(new FlowLayout());
-            JPanel containerPanel = new JPanel();
-
-            // Add some vertical space
-            containerPanel.add(Box.createVerticalStrut(10)); // 10 is the height of the strut in pixels
-
-            JLabel label = new JLabel("Press Clear Changes to restore the original values");
-
-            containerPanel.add(label);
-
-            // Create and add components
-            label.setAlignmentX(Component.CENTER_ALIGNMENT);
-            containerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-            containerPanel.add(label);
-
-            // Panel for arranging components vertically
-            containerPanel.setLayout(new BoxLayout(containerPanel, BoxLayout.Y_AXIS));
-
-            // Center the container panel
-
-            // Add some vertical space
-            containerPanel.add(Box.createVerticalStrut(10)); // 10 is the height of the strut in pixels
-
-            JButton confirmButton = new JButton("Clear Changes");
-            confirmButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-            // Perform the clearance
-            confirmButton.addActionListener(event -> {
-                for (int i = 1; i < personInfoTextFields.length; i++) {
-                    String value = personInfoValues[i];
-
-                    if(value == null || value.isEmpty())
-                        personInfoTextFields[i].setText("");
-                    else
-                        personInfoTextFields[i].setText(personInfoValues[i]);
-                }
-
-                // Create a JOptionPane
-                JOptionPane pane = new JOptionPane("All changes cleared.", JOptionPane.INFORMATION_MESSAGE);
-                JDialog dialog = pane.createDialog(this, "Message");
-
-                // Set a timer to close the dialog after 1 seconds (1000 milliseconds)
-                Timer timer = new Timer(1000, e -> dialog.dispose());
-                timer.setRepeats(false); // Ensure the timer only runs once
-                timer.start();
-
-                dialog.setVisible(true); // Show the dialog
-
-                dispose(); // Close the window
-            });
-
-            containerPanel.add(confirmButton);
-
-            // Add the panel to the dialog's content pane
-            getContentPane().add(containerPanel, BorderLayout.CENTER);
-        }
-    } // end ClearConfirmationWindow()
 
     /** Returns if the text field values have changed or not */
     private boolean hasChanged(){
@@ -870,7 +819,6 @@ public class EditPerson extends ApplicationWindow {
         }
 
         private void initializeUI() {
-//            setSize(300, 200);
             setLayout(new FlowLayout());
 
             // Panel for label and text field

@@ -270,17 +270,10 @@ public class AddPerson extends ApplicationWindow {
 			prepStmt.execute();
 
 			// Create a JOptionPane
-			JOptionPane pane = new JOptionPane("Persons added successfully", JOptionPane.INFORMATION_MESSAGE);
-			JDialog dialog = pane.createDialog(this, "Message");
+			JOptionPane.showMessageDialog(this, "Persons added successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
 
-			// Set a timer to close the dialog after 1 seconds (1000 milliseconds)
-			Timer timer = new Timer(1000, e -> dialog.dispose());
-			timer.setRepeats(false); // Ensure the timer only runs once
-			timer.start();
-
-			dialog.setVisible(true); // Show the dialog
-
-			dispose(); // Close the window
+			// Close the window
+			dispose();
 
 			PersonModule.refreshTable();
 

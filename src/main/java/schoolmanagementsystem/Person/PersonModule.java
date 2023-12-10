@@ -4,12 +4,8 @@ import schoolmanagementsystem.ApplicationWindow;
 import schoolmanagementsystem.LoginPage;
 import schoolmanagementsystem.Utilities.DatabaseConnection;
 
-import java.awt.EventQueue;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.FontMetrics;
-import java.awt.GridBagLayout;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
@@ -52,8 +48,10 @@ import java.awt.BorderLayout;
 
 public class PersonModule extends ApplicationWindow {
 	
-	private JPanel panel;
+	private JPanel panel, buttonPanel;
+	private JLabel instructionsLabel;
 	private JTextField searchTextField;
+	private JScrollPane tableScrollPane;
 	private JButton logoutButton, addButton, editButton, viewButton;
 	private static JTable personTable;
 	private TableRowSorter<DefaultTableModel> tableRowSorter;
@@ -91,46 +89,38 @@ public class PersonModule extends ApplicationWindow {
 
 	private void initComponents() {
 		// Main panel setup
-		// panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
 		this.panel = new JPanel();
 		this.panel.setLayout(new BoxLayout(this.panel, BoxLayout.PAGE_AXIS));
 
 		// Instructions label setup
-		JLabel instructionsLabel = new JLabel(INSTRUCTIONS_LABEL_TEXT);
+		this.instructionsLabel = new JLabel(INSTRUCTIONS_LABEL_TEXT);
 		Font currentFont = instructionsLabel.getFont();
 		Font newFont = currentFont.deriveFont(currentFont.getSize2D() * 1.15f); // Increase size by 50%
-		instructionsLabel.setFont(newFont);// instructionsLabel.setFont(regularFont);
-		// instructionsLabel.setOpaque(true);
-		instructionsLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-		// instructionsLabel.setPreferredSize(new Dimension(900, 80));
-		// panel.add(instructionsLabel);
+		this.instructionsLabel.setFont(newFont);
+		this.instructionsLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
 		// Search text field setup
-		searchTextField = new JTextField();
-		// searchTextField.setPreferredSize(new Dimension(930, 30));
-		panel.add(searchTextField);
+		this.searchTextField = new JTextField();
+		this.panel.add(searchTextField);
 		setSearchFocusListeners();
 
 		// Create Table
 		createTable();
 
 		// Button panel setup
-		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT)); // 1 row, 5 cols, 5px hgap, 5px vgap
-		// buttonPanel.setPreferredSize(new Dimension(930, 25));
+		this.buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT)); // 1 row, 5 cols, 5px hgap, 5px vgap
 
 		// Buttons setup
-		logoutButton = new JButton("Logout");
-		addButton = new JButton("Add");
-		editButton = new JButton("Edit");
-		viewButton = new JButton("View");
-		buttonPanel.add(logoutButton);
-		// buttonPanel.add(Box.createHorizontalStrut(722)); // Spacer setup
-		buttonPanel.add(addButton);
-		buttonPanel.add(editButton);
-		buttonPanel.add(viewButton);
+		this.logoutButton = new JButton("Logout");
+		this.addButton = new JButton("Add");
+		this.editButton = new JButton("Edit");
+		this.viewButton = new JButton("View");
+		this.buttonPanel.add(this.logoutButton);
+		this.buttonPanel.add(this.addButton);
+		this.buttonPanel.add(this.editButton);
+		this.buttonPanel.add(this.viewButton);
 
-		// panel.add(buttonPanel);
-		searchTextField.getDocument().addDocumentListener(new DocumentListener() {
+		this.searchTextField.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
 			public void insertUpdate(DocumentEvent e) {
 				// Stop search from filtering using the placeholder
@@ -151,13 +141,9 @@ public class PersonModule extends ApplicationWindow {
 		});
 
 		// Finalize frame setup
-		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Set the default close operation
-		// setContentPane(panel1); // Add panel to the frame
 		getContentPane().add(instructionsLabel, BorderLayout.NORTH);
 		getContentPane().add(panel, BorderLayout.CENTER);
 		getContentPane().add(buttonPanel, BorderLayout.SOUTH);
-		// setSize(960, 525); // Set the frame size
-		// setLocationRelativeTo(null); // Center the frame
 
 		pack();
 		setupActionListeners();
@@ -254,16 +240,16 @@ public class PersonModule extends ApplicationWindow {
 		DefaultTableModel tableModel = (DefaultTableModel) personTable.getModel();
 		tableModel.setDataVector(fetchDataFromDatabase(), COLUMN_NAMES);
 		tableModel.fireTableDataChanged();
-		// setColumnWidths(); // Reapply column widths after refreshing data
+		setColumnWidths(); // Reapply column widths after refreshing data
 	}
 
 	// Helper method to set column widths
 	private static void setColumnWidths() {
 		TableColumnModel columnModel = personTable.getColumnModel();
 		for (int i = 0; i < COLUMN_WIDTHS.length; i++) {
-			if (i < columnModel.getColumnCount()) {
-				// columnModel.getColumn(i).setPreferredWidth(COLUMN_WIDTHS[i]);
-			} else
+			if (i < columnModel.getColumnCount())
+				columnModel.getColumn(i).setPreferredWidth(COLUMN_WIDTHS[i]);
+			else
 				break;
 		}
 	}
@@ -320,14 +306,10 @@ public class PersonModule extends ApplicationWindow {
 			}
 		});
 
-		// Calculate the width in pixels for each character
-		FontMetrics metrics = personTable.getFontMetrics(personTable.getFont());
-		int charWidth = metrics.charWidth('M');
-
 		// Set column widths
 		TableColumnModel columnModel = personTable.getColumnModel();
 		for (int i = 0; i < COLUMN_WIDTHS.length; i++) {
-			// columnModel.getColumn(i).setPreferredWidth(COLUMN_WIDTHS[i]);
+			columnModel.getColumn(i).setPreferredWidth(COLUMN_WIDTHS[i]);
 		}
 
 		// Table Row Sorterer
@@ -335,15 +317,14 @@ public class PersonModule extends ApplicationWindow {
 		personTable.setRowSorter(sorter);
 
 		// Sorter for search
-		tableRowSorter = new TableRowSorter<>(tableModel);
-		personTable.setRowSorter(tableRowSorter);
+		this.tableRowSorter = new TableRowSorter<>(tableModel);
+		personTable.setRowSorter(this.tableRowSorter);
 
 		// Add personTable to scroll pane
-		JScrollPane tableScrollPane = new JScrollPane(personTable);
-		// tableScrollPane.setPreferredSize(new Dimension(930, 325));
-		tableScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		this.tableScrollPane = new JScrollPane(personTable);
+		this.tableScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
-		panel.add(tableScrollPane); // Add the JScrollPane containing the JTable to the panel
+		this.panel.add(this.tableScrollPane); // Add the JScrollPane containing the JTable to the panel
 	}
 
 	private int getSelectedRowID() {
@@ -358,7 +339,7 @@ public class PersonModule extends ApplicationWindow {
 	}
 
 	private void setSearchFocusListeners() {
-		searchTextField.addFocusListener(new FocusAdapter() {
+		this.searchTextField.addFocusListener(new FocusAdapter() {
 			// focusGained
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -387,9 +368,9 @@ public class PersonModule extends ApplicationWindow {
 	private void filterTable() {
 		String searchText = searchTextField.getText().trim().toLowerCase();
 		if (!searchText.isEmpty()) {
-			tableRowSorter.setRowFilter(new PersonRowFilter(searchText));
+			this.tableRowSorter.setRowFilter(new PersonRowFilter(searchText));
 		} else {
-			tableRowSorter.setRowFilter(null);
+			this.tableRowSorter.setRowFilter(null);
 		}
 	}
 

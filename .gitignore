@@ -17,6 +17,10 @@
 *.tar.gz
 *.rar
 
+# IDE - VSCode #
+################
+.vscode/
+
 # IDE - Eclipse #
 #################
 .project

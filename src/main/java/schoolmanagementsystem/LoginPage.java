@@ -16,7 +16,6 @@ import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.JOptionPane;
 import javax.swing.border.EmptyBorder;
-import java.awt.EventQueue;
 import java.awt.Color;
 import java.awt.Component;
 
