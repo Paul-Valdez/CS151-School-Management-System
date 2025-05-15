@@ -26,6 +26,7 @@
 .project
 .classpath
 .settings/
+.metadata/
 
 # IDE - IntelliJ IDEA #
 #######################
